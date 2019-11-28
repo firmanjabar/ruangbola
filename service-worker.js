@@ -1,8 +1,10 @@
-const CACHE_NAME = 'firstpwa-v8.5';
+const CACHE_NAME = 'firstpwa-v8.6';
 var urlsToCache = [
 	'/',
 	'/nav.html',
 	'/index.html',
+	'/standing.html',
+	'/team.html',
 	'/pages/home.html',
 	'/pages/challenge.html',
 	'/pages/about.html',
@@ -11,15 +13,22 @@ var urlsToCache = [
 	'/css/styles.css',
 	'/js/materialize.min.js',
 	'/js/script.js',
-	'/img/angular.jpx',
-	'/img/react.jpx',
-	'/img/vue.jpx',
 	'/img/firman.jpx',
-	'/img/idcamp.jpx',
-	'/img/dicoding.jpx',
-	'/img/bekraf.jpx',
 	'/img/background2.jpx',
 	'/img/background3.jpx',
+	'/img/liga/404.png',
+	'/img/liga/BL1.png',
+	'/img/liga/BSA.png',
+	'/img/liga/CL.png',
+	'/img/liga/DED.png',
+	'/img/liga/EC.png',
+	'/img/liga/ELC.png',
+	'/img/liga/FL1.png',
+	'/img/liga/PD.png',
+	'/img/liga/PL.png',
+	'/img/liga/PPL.png',
+	'/img/liga/SA.png',
+	'/img/liga/WC.png',
 	'/manifest.json',
 	'/icons/icon.png',
 	'/icons/icon-192x192.png',
@@ -30,7 +39,6 @@ var urlsToCache = [
 	'/icons/linkedin.svg',
 	'/icons/menu.svg',
 	'/js/api.js',
-	'/article.html',
 ];
 
 self.addEventListener('install', function (event) {

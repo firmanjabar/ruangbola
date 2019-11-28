@@ -1,12 +1,12 @@
-const baseUrl = "https://api.football-data.org/v2/";
+const base_url = "https://api.football-data.org/v2/";
 
-const apiToken = 'b3dad9833b3a4b78af52563c2d2b6895';
+const api_token = 'b3dad9833b3a4b78af52563c2d2b6895';
 
 let fetchApi = url => {
   return fetch(url, {
-    mode: "no-cors",
+    // mode: "no-cors",
     headers: {
-      'X-Auth-Token': apiToken,
+      'X-Auth-Token': api_token,
     }
   });
 }
@@ -34,121 +34,380 @@ function error(error) {
 // Blok kode untuk melakukan request data json
 function getCompetitions() {
   if ('caches' in window) {
-    caches.match(baseUrl + "competitions?plan=TIER_ONE").then(function (response) {
+    caches.match(base_url + "competitions?plan=TIER_ONE").then(function (response) {
       if (response) {
-        console.log(response);
         response.json().then(function (data) {
-          console.log(data);
-          var articlesHTML = "";
+          // console.log(data);
+          let leagueHTML = "";
           data.competitions.forEach(function (liga) {
-            articlesHTML += `
-                    <div class="col s12 m2" >
-                      <div class="card">
-                        <a href="./article.html?id=${liga.id}">
-                          <div class="card-image waves-effect waves-block waves-light">
-                            <img src="${liga.thumbnail}" />
-                          </div>
-                        </a>
-                        <div class="card-content">
-                          <span class="card-title truncate">${liga.name} (${liga.code})</span>
-                          <p>${liga.area[name]}</p>
-                        </div>
-                        <div class="card-content">
-                          <p>Mulai: ${liga.currentSeason[startDate]}</p>
-                          <p>Berakhir: ${liga.currentSeason[endDate]}</p>
-                          <p>Pertandingan Berlangsung: ${liga.currentSeason[currentMatchday]}</p>
-                        </div>
-                      </div>
-                    </div>
-                    `;
+            leagueHTML += `
+              <div class="col s12 m4" >
+              <a href="./standing.html?id=${liga.id}">
+                <div class="card">
+                  <div class="card-image waves-effect waves-block waves-light">
+                    <img src="img/liga/${liga.code}.png" />
+                  </div>
+                  <hr>
+                  <div class="card-content">
+                    <span class="truncate"><b>${liga.name}</b></span>
+                    <p>${liga.area.name}</p>
+                    <hr>
+                    <p>Kode Liga: ${liga.code}</p>
+                    <p>Mulai: ${liga.currentSeason.startDate}</p>
+                    <p>Berakhir: ${liga.currentSeason.endDate}</p>
+                    <p>Pertandingan: ${liga.currentSeason.currentMatchday}</p>
+                  </div>
+                </div>
+              </a>
+              </div>
+              `;
           });
           // Sisipkan komponen card ke dalam elemen dengan id #content
-          document.getElementById("articles").innerHTML = articlesHTML;
+          document.getElementById("leagues").innerHTML = leagueHTML;
         })
       }
     })
   }
-  fetch(baseUrl + "competitions?plan=TIER_ONE")
+  fetchApi(base_url + "competitions?plan=TIER_ONE")
     .then(status)
     .then(json)
     .then(function (data) {
-      console.log(data);
+      // console.log(data);
       // Objek/array JavaScript dari response.json() masuk lewat data.
       // Menyusun komponen card artikel secara dinamis
-      var articlesHTML = "";
+      let leagueHTML = "";
       data.competitions.forEach(function (liga) {
-        articlesHTML += `
-            <div class="col s12 m2" >
-              <div class="card">
-                <a href="./article.html?id=${liga.id}">
-                  <div class="card-image waves-effect waves-block waves-light">
-                    <img src="${liga.thumbnail}" />
-                  </div>
-                </a>
-                <div class="card-content">
-                  <span class="card-title truncate">${liga.name} (${liga.code})</span>
-                  <p>${liga.area[name]}</p>
-                </div>
-                <div class="card-content">
-                  <p>Mulai: ${liga.currentSeason[startDate]}</p>
-                  <p>Berakhir: ${liga.currentSeason[endDate]}</p>
-                  <p>Pertandingan Berlangsung: ${liga.currentSeason[currentMatchday]}</p>
-                </div>
+        leagueHTML += `
+          <div class="col s12 m4" >
+          <a href="./standing.html?id=${liga.id}">
+            <div class="card">
+              <div class="card-image waves-effect waves-block waves-light">
+                <img src="img/liga/${liga.code}.png" />
+              </div>
+              <hr>
+              <div class="card-content">
+                <span class="truncate"><b>${liga.name}</b></span>
+                <p>${liga.area.name}</p>
+                <hr>
+                <p>Kode Liga: ${liga.code}</p>
+                <p>Mulai: ${liga.currentSeason.startDate}</p>
+                <p>Berakhir: ${liga.currentSeason.endDate}</p>
+                <p>Pertandingan: ${liga.currentSeason.currentMatchday}</p>
               </div>
             </div>
-            `;
+          </a>
+          </div>
+          `;
       });
       // Sisipkan komponen card ke dalam elemen dengan id #content
-      document.getElementById("articles").innerHTML = articlesHTML;
+      document.getElementById("leagues").innerHTML = leagueHTML;
     })
     .catch(error);
 }
 
-function getArticleById() {
+function getStanding() {
   // Ambil nilai query parameter (?id=)
-  var urlParams = new URLSearchParams(window.location.search);
-  var idParam = urlParams.get("id");
+  let urlParams = new URLSearchParams(window.location.search);
+  let idParam = urlParams.get("id");
 
   if ('caches' in window) {
-    caches.match(baseUrl + "article/" + idParam).then(function (response) {
+    caches.match(base_url + "competitions/" + idParam + "/standings").then(function (response) {
       if (response) {
         response.json().then(function (data) {
-          var articleHTML = `
-            <div class="card">
-              <div class="card-image waves-effect waves-block waves-light">
-                <img src="${data.result.cover}" />
-              </div>
-              <div class="card-content">
-                <span class="card-title">${data.result.post_title}</span>
-                ${snarkdown(data.result.post_content)}
-              </div>
-            </div>
-          `;
+          let standingsHTML = "";
+          let leagueHTML = "";
+          if (data.competition.id == 2018 || data.competition.id == 2000) {
+            leagueHTML += `
+              <div class="col m3 l4"></div>
+                <div class="col s12 m6 l4">
+                  <div class="card grey darken-4">
+                    <div class="card-image waves-effect waves-block waves-light">
+                      <img src="img/liga/${data.competition.code}.png" />
+                    </div>
+                    <hr>
+                    <div class="card-content">
+                      <span class="truncate"><b>${data.competition.name}</b></span>
+                      <p>${data.competition.area.name}</p>
+                      <hr>
+                      <p>Kode Liga: ${data.competition.code}</p>
+                      <p>Mulai: ${data.season.startDate}</p>
+                      <p>Berakhir: ${data.season.endDate}</p>
+                      <p>Pertandingan: ${data.season.currentMatchday}</p>
+                    </div>
+                  </div>
+                </div>
+              <div class="col m3 l4"></div>
+              `;
+
+            standingsHTML +=
+              `
+              <tr class="text-center">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                  <h4>Data Kosong</h4>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            `;
+          } else {
+            leagueHTML += `
+              <div class="col m3 l4"></div>
+                <div class="col s12 m6 l4">
+                  <div class="card grey darken-4">
+                    <div class="card-image waves-effect waves-block waves-light">
+                      <img src="img/liga/${data.competition.code}.png" />
+                    </div>
+                    <hr>
+                    <div class="card-content">
+                      <span class="truncate"><b>${data.competition.name}</b></span>
+                      <p>${data.competition.area.name}</p>
+                      <hr>
+                      <p>Kode Liga: ${data.competition.code}</p>
+                      <p>Mulai: ${data.season.startDate}</p>
+                      <p>Berakhir: ${data.season.endDate}</p>
+                      <p>Pertandingan: ${data.season.currentMatchday}</p>
+                    </div>
+                  </div>
+                </div>
+              <div class="col m3 l4"></div>
+              `;
+
+            data.standings[0].table.forEach(dataTeam => {
+              let urlTeamImage = dataTeam.team.crestUrl;
+              if (urlTeamImage == null || urlTeamImage == '') {
+                urlTeamImage = 'img/liga/404.png';
+              } else {
+                urlTeamImage = urlTeamImage.replace(/^http:\/\//i, 'https://');
+              }
+              standingsHTML +=
+                `
+              <tr>
+              <td>${dataTeam.position}<br />&nbsp;</td>
+              <td>
+                <a href="./team.html?id=${dataTeam.team.id}">
+                <img src="${urlTeamImage}" alt="${dataTeam.team.name}" class="responsive-img" style="height:30px">
+                </a>
+              </td>
+              <td>
+                <a href="./team.html?id=${dataTeam.team.id}">
+                  ${dataTeam.team.name}
+                </a><br />&nbsp;
+              </td>
+              <td>${dataTeam.playedGames}<br />&nbsp;</td>
+              <td>${dataTeam.won}<br />&nbsp;</td>
+              <td>${dataTeam.draw}<br />&nbsp;</td>
+              <td>${dataTeam.lost}<br />&nbsp;</td>
+              <td>${dataTeam.goalsFor}<br />&nbsp;</td>
+              <td>${dataTeam.goalsAgainst}<br />&nbsp;</td>
+              <td>${dataTeam.goalDifference}<br />&nbsp;</td>
+              <td>${dataTeam.points}<br />&nbsp;</td>
+              </tr>
+            `;
+            });
+          }
           // Sisipkan komponen card ke dalam elemen dengan id #content
-          document.getElementById("body-content").innerHTML = articleHTML;
+          document.getElementById("standings").innerHTML = standingsHTML;
+          document.getElementById("leagues").innerHTML = leagueHTML;
         })
       }
     })
   }
-  fetch(baseUrl + "article/" + idParam)
+  fetchApi(base_url + "competitions/" + idParam + "/standings")
     .then(status)
     .then(json)
     .then(function (data) {
-      // Objek JavaScript dari response.json() masuk lewat variabel data.
-      console.log(data);
-      // Menyusun komponen card artikel secara dinamis
-      var articleHTML = `
-            <div class="card">
-              <div class="card-image waves-effect waves-block waves-light">
-                <img src="${data.result.cover}" />
+      let standingsHTML = "";
+      let leagueHTML = "";
+      if (data.competition.id == 2018 || data.competition.id == 2000) {
+        leagueHTML += `
+              <div class="col m3 l4"></div>
+                <div class="col s12 m6 l4">
+                  <div class="card grey darken-4">
+                    <div class="card-image waves-effect waves-block waves-light">
+                      <img src="img/liga/${data.competition.code}.png" />
+                    </div>
+                    <hr>
+                    <div class="card-content">
+                      <span class="truncate"><b>${data.competition.name}</b></span>
+                      <p>${data.competition.area.name}</p>
+                      <hr>
+                      <p>Kode Liga: ${data.competition.code}</p>
+                      <p>Mulai: ${data.season.startDate}</p>
+                      <p>Berakhir: ${data.season.endDate}</p>
+                      <p>Pertandingan: ${data.season.currentMatchday}</p>
+                    </div>
+                  </div>
+                </div>
+              <div class="col m3 l4"></div>
+              `;
+
+        standingsHTML +=
+          `
+              <tr class="text-center">
+                <td><br />&nbsp;</td>
+                <td><br />&nbsp;</td>
+                <td><br />&nbsp;</td>
+                <td><br />&nbsp;</td>
+                <td>
+                  <h6><b>Data Kosong</b></h6>
+                </td>
+                <td><br />&nbsp;</td>
+                <td><br />&nbsp;</td>
+                <td><br />&nbsp;</td>
+                <td><br />&nbsp;</td>
+                <td><br />&nbsp;</td>
+                <td><br />&nbsp;</td>
+              </tr>
+            `;
+      } else {
+        leagueHTML += `
+              <div class="col m3 l4"></div>
+                <div class="col s12 m6 l4">
+                  <div class="card grey darken-4">
+                    <div class="card-image waves-effect waves-block waves-light">
+                      <img src="img/liga/${data.competition.code}.png" />
+                    </div>
+                    <hr>
+                    <div class="card-content">
+                      <span class="truncate"><b>${data.competition.name}</b></span>
+                      <p>${data.competition.area.name}</p>
+                      <hr>
+                      <p>Kode Liga: ${data.competition.code}</p>
+                      <p>Mulai: ${data.season.startDate}</p>
+                      <p>Berakhir: ${data.season.endDate}</p>
+                      <p>Pertandingan: ${data.season.currentMatchday}</p>
+                    </div>
+                  </div>
+                </div>
+              <div class="col m3 l4"></div>
+              `;
+
+        data.standings[0].table.forEach(dataTeam => {
+          let urlTeamImage = dataTeam.team.crestUrl;
+          if (urlTeamImage == null || urlTeamImage == '') {
+            urlTeamImage = 'img/liga/404.png';
+          } else {
+            urlTeamImage = urlTeamImage.replace(/^http:\/\//i, 'https://');
+          }
+          standingsHTML +=
+            `
+              <tr>
+              <td>${dataTeam.position}<br />&nbsp;</td>
+              <td>
+                <a href="./team.html?id=${dataTeam.team.id}">
+                <img src="${urlTeamImage}" alt="${dataTeam.team.name}" class="responsive-img" style="height:30px">
+                </a>
+              </td>
+              <td>
+                <a href="./team.html?id=${dataTeam.team.id}">
+                  ${dataTeam.team.name}
+                </a><br />&nbsp;
+              </td>
+              <td>${dataTeam.playedGames}<br />&nbsp;</td>
+              <td>${dataTeam.won}<br />&nbsp;</td>
+              <td>${dataTeam.draw}<br />&nbsp;</td>
+              <td>${dataTeam.lost}<br />&nbsp;</td>
+              <td>${dataTeam.goalsFor}<br />&nbsp;</td>
+              <td>${dataTeam.goalsAgainst}<br />&nbsp;</td>
+              <td>${dataTeam.goalDifference}<br />&nbsp;</td>
+              <td>${dataTeam.points}<br />&nbsp;</td>
+              </tr>
+            `;
+        });
+      }
+      // Sisipkan komponen card ke dalam elemen dengan id #content
+      document.getElementById("standings").innerHTML = standingsHTML;
+      document.getElementById("leagues").innerHTML = leagueHTML;
+    });
+}
+
+function getTeam() {
+  // Ambil nilai query parameter (?id=)
+  let urlParams = new URLSearchParams(window.location.search);
+  let idParam = urlParams.get("id");
+
+  if ('caches' in window) {
+    caches.match(base_url + "teams/" + idParam).then(function (response) {
+      if (response) {
+        response.json().then(function (data) {
+
+        })
+      }
+    })
+  }
+  fetchApi(base_url + "teams/" + idParam)
+    .then(status)
+    .then(json)
+    .then(function (data) {
+      let squadHTML = "";
+      let teamHTML = "";
+
+      let logoTeam = data.crestUrl;
+      if (logoTeam == null || logoTeam == '') {
+        logoTeam = 'img/liga/404.png';
+      } else {
+        logoTeam = logoTeam.replace(/^http:\/\//i, 'https://');
+      }
+
+      teamHTML += `
+        <div class="col m3"></div>
+          <div class="col s12 m6">
+            <div class="card grey darken-4">
+              <div class="row">
+                <div class="col s2"></div>
+                <div class="col s8 card-image waves-effect waves-block waves-light">
+                  <img src="${logoTeam}" />
+                </div>
+                <div class="col s2"></div>
               </div>
+              <hr>
               <div class="card-content">
-                <span class="card-title">${data.result.post_title}</span>
-                ${snarkdown(data.result.post_content)}
+                <span class="truncate"><b>${data.name} (${data.tla})</b></span>
+                <a href="${data.website}" target="_blank">  
+                  <p>${data.website}</p>
+                </a>
+                <hr>
+                <p>Berdiri: ${data.founded}</p>
+                <p>Stadion: ${data.venue}</p>
+                <p>Warna: ${data.clubColors}</p>
+                <p>E-mail: ${data.email}</p>
+                <p>Telepon: ${data.phone}</p>
+                <p>Alamat: ${data.address}</p>
               </div>
             </div>
+          </div>
+        <div class="col m3"></div>
+        `;
+
+      data.squad.forEach(dataSquad => {
+        squadHTML +=
+          `
+          <li class="collection-item avatar">
+            <div class="grey darken-4 collapsible-header">
+              <i class="material-icons">person</i>
+              ${dataSquad.name}
+            </div>
+            <div class="grey darken-4 collapsible-body">
+              <h5>${dataSquad.name}</h5>
+              <p>Posisi       : ${dataSquad.position}</p>
+              <p>TTL          : ${dataSquad.countryOfBirth}, ${dataSquad.dateOfBirth}</p>
+              <p>Kebangsaan   : ${dataSquad.nationality}</p>
+              <p>No. Punggung : ${dataSquad.shirtNumber}</p>
+              <p>Peran        : ${dataSquad.role}</p>
+            </div>
+        </li>
           `;
+      });
       // Sisipkan komponen card ke dalam elemen dengan id #content
-      document.getElementById("body-content").innerHTML = articleHTML;
+      document.getElementById("squad").innerHTML = squadHTML;
+      document.getElementById("team").innerHTML = teamHTML;
     });
 }
