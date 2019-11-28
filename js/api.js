@@ -338,7 +338,68 @@ function getTeam() {
     caches.match(base_url + "teams/" + idParam).then(function (response) {
       if (response) {
         response.json().then(function (data) {
+          let squadHTML = "";
+          let teamHTML = "";
 
+          let logoTeam = data.crestUrl;
+          if (logoTeam == null || logoTeam == '') {
+            logoTeam = 'img/liga/404.png';
+          } else {
+            logoTeam = logoTeam.replace(/^http:\/\//i, 'https://');
+          }
+
+          teamHTML += `
+            <div class="col m3"></div>
+              <div class="col s12 m6">
+                <div class="card grey darken-4">
+                  <div class="row">
+                    <div class="col s2"></div>
+                    <div class="col s8 card-image waves-effect waves-block waves-light">
+                      <img src="${logoTeam}" />
+                    </div>
+                    <div class="col s2"></div>
+                  </div>
+                  <hr>
+                  <div class="card-content">
+                    <span class="truncate"><b>${data.name} (${data.tla})</b></span>
+                    <a href="${data.website}" target="_blank">  
+                      <p>${data.website}</p>
+                    </a>
+                    <hr>
+                    <p>Berdiri: ${data.founded}</p>
+                    <p>Stadion: ${data.venue}</p>
+                    <p>Warna: ${data.clubColors}</p>
+                    <p>E-mail: ${data.email}</p>
+                    <p>Telepon: ${data.phone}</p>
+                    <p>Alamat: ${data.address}</p>
+                  </div>
+                </div>
+              </div>
+            <div class="col m3"></div>
+          `;
+
+          data.squad.forEach(dataSquad => {
+            squadHTML +=
+              `
+                <li class="collection-item avatar">
+                  <div class="grey darken-4 collapsible-header">
+                    <i class="material-icons">person</i>
+                    ${dataSquad.name}
+                  </div>
+                  <div class="grey darken-4 collapsible-body">
+                    <h5>${dataSquad.name}</h5>
+                    <p>Posisi       : ${dataSquad.position}</p>
+                    <p>TTL          : ${dataSquad.countryOfBirth}, ${dataSquad.dateOfBirth}</p>
+                    <p>Kebangsaan   : ${dataSquad.nationality}</p>
+                    <p>No. Punggung : ${dataSquad.shirtNumber}</p>
+                    <p>Peran        : ${dataSquad.role}</p>
+                  </div>
+                </li>
+              `;
+          });
+          // Sisipkan komponen card ke dalam elemen dengan id #content
+          document.getElementById("squad").innerHTML = squadHTML;
+          document.getElementById("team").innerHTML = teamHTML;
         })
       }
     })
@@ -409,5 +470,507 @@ function getTeam() {
       // Sisipkan komponen card ke dalam elemen dengan id #content
       document.getElementById("squad").innerHTML = squadHTML;
       document.getElementById("team").innerHTML = teamHTML;
+    });
+}
+
+function getLastMatch() {
+  // Ambil nilai query parameter (?id=)
+  let urlParams = new URLSearchParams(window.location.search);
+  let idParam = urlParams.get("id");
+
+  if ('caches' in window) {
+    caches.match(base_url + "teams/" + idParam + "/matches?status=FINISHED").then(function (response) {
+      if (response) {
+        response.json().then(function (data) {
+          let lastMatchHTML = "";
+
+          let lastMatch = data.matches[data.matches.length - 1];
+          let ts = new Date(lastMatch.utcDate);
+
+          function getLogoHome(id) {
+            caches.match(base_url + "teams/" + id).then(function (response) {
+              if (response) {
+                response.json().then(function (data) {
+                  let cek = '';
+                  let logoTeam = data.crestUrl;
+                  if (logoTeam == null || logoTeam == '') {
+                    logoTeam = 'img/liga/404.png';
+                  } else {
+                    logoTeam = logoTeam.replace(/^http:\/\//i, 'https://');
+                  }
+
+                  cek += `
+                  <img src="${logoTeam}" alt="" class="responsive-img" style="width: 50px;">
+                  <br>
+                  ${data.name}
+                `;
+
+                  document.getElementById("home").innerHTML = cek;
+                })
+              }
+            })
+            fetchApi(base_url + "teams/" + id)
+              .then(status)
+              .then(json)
+              .then(function (data) {
+
+                let cek = '';
+                let logoTeam = data.crestUrl;
+                if (logoTeam == null || logoTeam == '') {
+                  logoTeam = 'img/liga/404.png';
+                } else {
+                  logoTeam = logoTeam.replace(/^http:\/\//i, 'https://');
+                }
+
+                cek += `
+                  <img src="${logoTeam}" alt="" class="responsive-img" style="width: 50px;">
+                  <br>
+                  ${data.name}
+                `;
+
+                document.getElementById("home").innerHTML = cek;
+              });
+          }
+
+          function getLogoAway(id) {
+            caches.match(base_url + "teams/" + id).then(function (response) {
+              if (response) {
+                response.json().then(function (data) {
+                  let cek = '';
+                  let logoTeam = data.crestUrl;
+                  if (logoTeam == null || logoTeam == '') {
+                    logoTeam = 'img/liga/404.png';
+                  } else {
+                    logoTeam = logoTeam.replace(/^http:\/\//i, 'https://');
+                  }
+
+                  cek += `
+                  <img src="${logoTeam}" alt="" class="responsive-img" style="width: 50px;">
+                  <br>
+                  ${data.name}
+                `;
+
+                  document.getElementById("away").innerHTML = cek;
+                })
+              }
+            })
+            fetchApi(base_url + "teams/" + id)
+              .then(status)
+              .then(json)
+              .then(function (data) {
+
+                let cek = '';
+                let logoTeam = data.crestUrl;
+                if (logoTeam == null || logoTeam == '') {
+                  logoTeam = 'img/liga/404.png';
+                } else {
+                  logoTeam = logoTeam.replace(/^http:\/\//i, 'https://');
+                }
+
+                cek += `
+                  <img src="${logoTeam}" alt="" class="responsive-img" style="width: 50px;">
+                  <br>
+                  ${data.name}
+                `;
+
+                document.getElementById("away").innerHTML = cek;
+              });
+          }
+
+          getLogoHome(lastMatch.homeTeam.id);
+          getLogoAway(lastMatch.awayTeam.id);
+
+          lastMatchHTML += `
+            <div class="row grey darken-4 collapsible-header valign-wrapper" style="margin:0px;">
+                <div class="col s12 m5 center-align" id="home">
+                </div>
+                <div class="col s12 m2 center-align">
+                    <p>${lastMatch.score.fullTime.homeTeam} - ${lastMatch.score.fullTime.awayTeam}</p>
+                </div>
+                <div class="col s12 m5 center-align" id="away">
+                </div>
+            </div>
+            <div class="grey darken-4 collapsible-body center-align">
+                <h6><b>${lastMatch.competition.name}</b></h6>
+                <p>${ts.toLocaleString()}</p>
+                <p>wasit - ${lastMatch.referees[0].name}</p>
+            </div>
+          `;
+          // Sisipkan komponen card ke dalam elemen dengan id #content
+          document.getElementById("last-match").innerHTML = lastMatchHTML;
+        })
+      }
+    })
+  }
+  fetchApi(base_url + "teams/" + idParam + "/matches?status=FINISHED")
+    .then(status)
+    .then(json)
+    .then(function (data) {
+      let lastMatchHTML = "";
+
+      let lastMatch = data.matches[data.matches.length - 1];
+      let ts = new Date(lastMatch.utcDate);
+
+      function getLogoHome(id) {
+        caches.match(base_url + "teams/" + id).then(function (response) {
+          if (response) {
+            response.json().then(function (data) {
+              let cek = '';
+              let logoTeam = data.crestUrl;
+              if (logoTeam == null || logoTeam == '') {
+                logoTeam = 'img/liga/404.png';
+              } else {
+                logoTeam = logoTeam.replace(/^http:\/\//i, 'https://');
+              }
+
+              cek += `
+              <img src="${logoTeam}" alt="" class="responsive-img" style="width: 50px;">
+              <br>
+              ${data.name}
+            `;
+
+              document.getElementById("home").innerHTML = cek;
+            })
+          }
+        })
+        fetchApi(base_url + "teams/" + id)
+          .then(status)
+          .then(json)
+          .then(function (data) {
+
+            let cek = '';
+            let logoTeam = data.crestUrl;
+            if (logoTeam == null || logoTeam == '') {
+              logoTeam = 'img/liga/404.png';
+            } else {
+              logoTeam = logoTeam.replace(/^http:\/\//i, 'https://');
+            }
+
+            cek += `
+              <img src="${logoTeam}" alt="" class="responsive-img" style="width: 50px;">
+              <br>
+              ${data.name}
+            `;
+
+            document.getElementById("home").innerHTML = cek;
+          });
+      }
+
+      function getLogoAway(id) {
+        caches.match(base_url + "teams/" + id).then(function (response) {
+          if (response) {
+            response.json().then(function (data) {
+              let cek = '';
+              let logoTeam = data.crestUrl;
+              if (logoTeam == null || logoTeam == '') {
+                logoTeam = 'img/liga/404.png';
+              } else {
+                logoTeam = logoTeam.replace(/^http:\/\//i, 'https://');
+              }
+
+              cek += `
+              <img src="${logoTeam}" alt="" class="responsive-img" style="width: 50px;">
+              <br>
+              ${data.name}
+            `;
+
+              document.getElementById("away").innerHTML = cek;
+            })
+          }
+        })
+        fetchApi(base_url + "teams/" + id)
+          .then(status)
+          .then(json)
+          .then(function (data) {
+
+            let cek = '';
+            let logoTeam = data.crestUrl;
+            if (logoTeam == null || logoTeam == '') {
+              logoTeam = 'img/liga/404.png';
+            } else {
+              logoTeam = logoTeam.replace(/^http:\/\//i, 'https://');
+            }
+
+            cek += `
+              <img src="${logoTeam}" alt="" class="responsive-img" style="width: 50px;">
+              <br>
+              ${data.name}
+            `;
+
+            document.getElementById("away").innerHTML = cek;
+          });
+      }
+
+      getLogoHome(lastMatch.homeTeam.id);
+      getLogoAway(lastMatch.awayTeam.id);
+
+      lastMatchHTML += `
+        <div class="row grey darken-4 collapsible-header valign-wrapper" style="margin:0px;">
+            <div class="col s12 m5 center-align" id="home">
+            </div>
+            <div class="col s12 m2 center-align">
+                <p>${lastMatch.score.fullTime.homeTeam} - ${lastMatch.score.fullTime.awayTeam}</p>
+            </div>
+            <div class="col s12 m5 center-align" id="away">
+            </div>
+        </div>
+        <div class="grey darken-4 collapsible-body center-align">
+            <h6><b>${lastMatch.competition.name}</b></h6>
+            <p>${ts.toLocaleString()}</p>
+            <p>wasit - ${lastMatch.referees[0].name}</p>
+        </div>
+      `;
+      // Sisipkan komponen card ke dalam elemen dengan id #content
+      document.getElementById("last-match").innerHTML = lastMatchHTML;
+    });
+}
+
+function getNextMatch() {
+  // Ambil nilai query parameter (?id=)
+  let urlParams = new URLSearchParams(window.location.search);
+  let idParam = urlParams.get("id");
+
+  if ('caches' in window) {
+    caches.match(base_url + "teams/" + idParam + "/matches?status=SCHEDULED").then(function (response) {
+      if (response) {
+        response.json().then(function (data) {
+          let nextMatchHTML = "";
+
+          let nextMatch = data.matches[0];
+          let ts = new Date(nextMatch.utcDate);
+
+          function getHome(id) {
+            caches.match(base_url + "teams/" + id).then(function (response) {
+              if (response) {
+                response.json().then(function (data) {
+                  let cek = '';
+                  let logoTeam = data.crestUrl;
+                  if (logoTeam == null || logoTeam == '') {
+                    logoTeam = 'img/liga/404.png';
+                  } else {
+                    logoTeam = logoTeam.replace(/^http:\/\//i, 'https://');
+                  }
+
+                  cek += `
+                  <img src="${logoTeam}" alt="" class="responsive-img" style="width: 50px;">
+                  <br>
+                  ${data.name}
+                `;
+
+                  document.getElementById("next-home").innerHTML = cek;
+                })
+              }
+            })
+            fetchApi(base_url + "teams/" + id)
+              .then(status)
+              .then(json)
+              .then(function (data) {
+
+                let cek = '';
+                let logoTeam = data.crestUrl;
+                if (logoTeam == null || logoTeam == '') {
+                  logoTeam = 'img/liga/404.png';
+                } else {
+                  logoTeam = logoTeam.replace(/^http:\/\//i, 'https://');
+                }
+
+                cek += `
+                  <img src="${logoTeam}" alt="" class="responsive-img" style="width: 50px;">
+                  <br>
+                  ${data.name}
+                `;
+
+                document.getElementById("next-home").innerHTML = cek;
+              });
+          }
+
+          function getAway(id) {
+            caches.match(base_url + "teams/" + id).then(function (response) {
+              if (response) {
+                response.json().then(function (data) {
+                  let cek = '';
+                  let logoTeam = data.crestUrl;
+                  if (logoTeam == null || logoTeam == '') {
+                    logoTeam = 'img/liga/404.png';
+                  } else {
+                    logoTeam = logoTeam.replace(/^http:\/\//i, 'https://');
+                  }
+
+                  cek += `
+                  <img src="${logoTeam}" alt="" class="responsive-img" style="width: 50px;">
+                  <br>
+                  ${data.name}
+                `;
+
+                  document.getElementById("next-away").innerHTML = cek;
+                })
+              }
+            })
+            fetchApi(base_url + "teams/" + id)
+              .then(status)
+              .then(json)
+              .then(function (data) {
+
+                let cek = '';
+                let logoTeam = data.crestUrl;
+                if (logoTeam == null || logoTeam == '') {
+                  logoTeam = 'img/liga/404.png';
+                } else {
+                  logoTeam = logoTeam.replace(/^http:\/\//i, 'https://');
+                }
+
+                cek += `
+                  <img src="${logoTeam}" alt="" class="responsive-img" style="width: 50px;">
+                  <br>
+                  ${data.name}
+                `;
+
+                document.getElementById("next-away").innerHTML = cek;
+              });
+          }
+
+          getHome(nextMatch.homeTeam.id);
+          getAway(nextMatch.awayTeam.id);
+
+          nextMatchHTML += `
+            <div class="row grey darken-4 collapsible-header valign-wrapper" style="margin:0px;">
+                <div class="col s12 m5 center-align" id="next-home">
+                </div>
+                <div class="col s12 m2 center-align">
+                    <p>${nextMatch.score.fullTime.homeTeam} - ${nextMatch.score.fullTime.awayTeam}</p>
+                </div>
+                <div class="col s12 m5 center-align" id="next-away">
+                </div>
+            </div>
+            <div class="grey darken-4 collapsible-body center-align">
+                <h6><b>${nextMatch.competition.name}</b></h6>
+                <p>${ts.toLocaleString()}</p>
+            </div>
+          `;
+          // Sisipkan komponen card ke dalam elemen dengan id #content
+          document.getElementById("next-match").innerHTML = nextMatchHTML;
+        })
+      }
+    })
+  }
+  fetchApi(base_url + "teams/" + idParam + "/matches?status=SCHEDULED")
+    .then(status)
+    .then(json)
+    .then(function (data) {
+      let nextMatchHTML = "";
+
+      let nextMatch = data.matches[0];
+      let ts = new Date(nextMatch.utcDate);
+
+      function getHome(id) {
+        caches.match(base_url + "teams/" + id).then(function (response) {
+          if (response) {
+            response.json().then(function (data) {
+              let cek = '';
+              let logoTeam = data.crestUrl;
+              if (logoTeam == null || logoTeam == '') {
+                logoTeam = 'img/liga/404.png';
+              } else {
+                logoTeam = logoTeam.replace(/^http:\/\//i, 'https://');
+              }
+
+              cek += `
+              <img src="${logoTeam}" alt="" class="responsive-img" style="width: 50px;">
+              <br>
+              ${data.name}
+            `;
+
+              document.getElementById("next-home").innerHTML = cek;
+            })
+          }
+        })
+        fetchApi(base_url + "teams/" + id)
+          .then(status)
+          .then(json)
+          .then(function (data) {
+
+            let cek = '';
+            let logoTeam = data.crestUrl;
+            if (logoTeam == null || logoTeam == '') {
+              logoTeam = 'img/liga/404.png';
+            } else {
+              logoTeam = logoTeam.replace(/^http:\/\//i, 'https://');
+            }
+
+            cek += `
+              <img src="${logoTeam}" alt="" class="responsive-img" style="width: 50px;">
+              <br>
+              ${data.name}
+            `;
+
+            document.getElementById("next-home").innerHTML = cek;
+          });
+      }
+
+      function getAway(id) {
+        caches.match(base_url + "teams/" + id).then(function (response) {
+          if (response) {
+            response.json().then(function (data) {
+              let cek = '';
+              let logoTeam = data.crestUrl;
+              if (logoTeam == null || logoTeam == '') {
+                logoTeam = 'img/liga/404.png';
+              } else {
+                logoTeam = logoTeam.replace(/^http:\/\//i, 'https://');
+              }
+
+              cek += `
+              <img src="${logoTeam}" alt="" class="responsive-img" style="width: 50px;">
+              <br>
+              ${data.name}
+            `;
+
+              document.getElementById("next-away").innerHTML = cek;
+            })
+          }
+        })
+        fetchApi(base_url + "teams/" + id)
+          .then(status)
+          .then(json)
+          .then(function (data) {
+
+            let cek = '';
+            let logoTeam = data.crestUrl;
+            if (logoTeam == null || logoTeam == '') {
+              logoTeam = 'img/liga/404.png';
+            } else {
+              logoTeam = logoTeam.replace(/^http:\/\//i, 'https://');
+            }
+
+            cek += `
+              <img src="${logoTeam}" alt="" class="responsive-img" style="width: 50px;">
+              <br>
+              ${data.name}
+            `;
+
+            document.getElementById("next-away").innerHTML = cek;
+          });
+      }
+
+      getHome(nextMatch.homeTeam.id);
+      getAway(nextMatch.awayTeam.id);
+
+      nextMatchHTML += `
+        <div class="row grey darken-4 collapsible-header valign-wrapper" style="margin:0px;">
+            <div class="col s12 m5 center-align" id="next-home">
+            </div>
+            <div class="col s12 m2 center-align">
+                <p>${nextMatch.score.fullTime.homeTeam} - ${nextMatch.score.fullTime.awayTeam}</p>
+            </div>
+            <div class="col s12 m5 center-align" id="next-away">
+            </div>
+        </div>
+        <div class="grey darken-4 collapsible-body center-align">
+            <h6><b>${nextMatch.competition.name}</b></h6>
+            <p>${ts.toLocaleString()}</p>
+        </div>
+      `;
+      // Sisipkan komponen card ke dalam elemen dengan id #content
+      document.getElementById("next-match").innerHTML = nextMatchHTML;
     });
 }

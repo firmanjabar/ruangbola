@@ -42,7 +42,28 @@
                 <!-- Card berisi artikel akan disisipkan ke dalam sini. -->
             </div>
         </div>
-        <blockquote>Click to see the Details</blockquote>
+        <blockquote>Click to see detail Next & Last Match</blockquote>
+        <div class="col s12 white-text">
+            <div>
+                <ul class="collapsible">
+                    <span class="black-text">
+                        <h6>&nbsp;&nbsp;&nbsp;&nbsp;Next Match</h6>
+                    </span>
+                    <li class="collection-item avatar" id="next-match">
+                        <!-- Data Last Match -->
+                    </li>
+                </ul>
+                <ul class="collapsible">
+                    <span class="black-text">
+                        <h6>&nbsp;&nbsp;&nbsp;&nbsp;Last Match</h6>
+                    </span>
+                    <li class="collection-item avatar" id="last-match">
+                        <!-- Data Last Match -->
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <blockquote>Click to see detail Squad Profile</blockquote>
         <div class="col s12 white-text">
             <div>
                 <ul class="collapsible" id="squad">
@@ -75,6 +96,8 @@
 
         document.addEventListener("DOMContentLoaded", function () {
             getTeam();
+            getLastMatch();
+            getNextMatch();
 
             // COLLAPSE
             var collapse = document.querySelectorAll('.collapsible');
