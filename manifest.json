@@ -1,7 +1,7 @@
 {
-    "name": "Code Ninja",
-    "short_name": "CodeNinja",
-    "description": "Learn how to code",
+    "name": "Ruang Bola",
+    "short_name": "RuangBola",
+    "description": "Ruang bola adalah progressive web apps yang menampilkan klasemen, team, pertandingan, dan masih banyak lagi dari 12 liga yang paling populer di dunia.",
     "start_url": "/index.html",
     "display": "standalone",
     "background_color": "#FFFCF2",

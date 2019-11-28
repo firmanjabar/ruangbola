@@ -1,6 +1,7 @@
-const CACHE_NAME = 'firstpwa-v8.9';
+const CACHE_NAME = 'firstpwa-v8.10';
 var urlsToCache = [
 	'/',
+	'/favicon.ico',
 	'/nav.html',
 	'/index.html',
 	'/standing.html',
