@@ -13,7 +13,3 @@ if ("serviceWorker" in navigator) {
 } else {
   console.log("ServiceWorker belum didukung browser ini.");
 }
-// REQUEST API UNTUK PERTAMA KALI
-document.addEventListener("DOMContentLoaded", function () {
-  getCompetitions();
-});

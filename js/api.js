@@ -4,7 +4,6 @@ const api_token = 'b3dad9833b3a4b78af52563c2d2b6895';
 
 let fetchApi = url => {
   return fetch(url, {
-    // mode: "no-cors",
     headers: {
       'X-Auth-Token': api_token,
     }
@@ -400,7 +399,7 @@ function getTeam() {
           // Sisipkan komponen card ke dalam elemen dengan id #content
           document.getElementById("squad").innerHTML = squadHTML;
           document.getElementById("team").innerHTML = teamHTML;
-        })
+        });
       }
     })
   }
@@ -973,4 +972,116 @@ function getNextMatch() {
       // Sisipkan komponen card ke dalam elemen dengan id #content
       document.getElementById("next-match").innerHTML = nextMatchHTML;
     });
+}
+
+function getSavedStanding() {
+  var urlParams = new URLSearchParams(window.location.search);
+  var idParam = urlParams.get("id");
+
+  getFavTeam(idParam).then(function (data) {
+    let standingsHTML = "";
+
+    data.standings[0].table.forEach(dataTeam => {
+      let urlTeamImage = dataTeam.team.crestUrl;
+      if (urlTeamImage == null || urlTeamImage == '') {
+        urlTeamImage = 'img/liga/404.png';
+      } else {
+        urlTeamImage = urlTeamImage.replace(/^http:\/\//i, 'https://');
+      }
+      standingsHTML +=
+        `
+          <div class="col m3 l4"></div>
+            <div class="col s12 m6 l4">
+              <div class="card grey darken-4">
+                <div class="card-image waves-effect waves-block waves-light">
+                  <img src="img/liga/${data.competition.code}.png" />
+                </div>
+                <hr>
+                <div class="card-content">
+                  <span class="truncate"><b>${data.competition.name}</b></span>
+                  <p>${data.competition.area.name}</p>
+                  <hr>
+                  <p>Kode Liga: ${data.competition.code}</p>
+                  <p>Mulai: ${data.season.startDate}</p>
+                  <p>Berakhir: ${data.season.endDate}</p>
+                  <p>Pertandingan: ${data.season.currentMatchday}</p>
+                </div>
+              </div>
+            </div>
+          <div class="col m3 l4"></div>
+        `;
+    });
+
+    document.getElementById("leagues").innerHTML = standingsHTML;
+  });
+}
+
+function getSavedTeam() {
+  var urlParams = new URLSearchParams(window.location.search);
+  var idParam = urlParams.get("id");
+
+  getFavTeam(idParam).then(function (data) {
+    let squadHTML = "";
+    let teamHTML = "";
+
+    let logoTeam = data.crestUrl;
+    if (logoTeam == null || logoTeam == '') {
+      logoTeam = 'img/liga/404.png';
+    } else {
+      logoTeam = logoTeam.replace(/^http:\/\//i, 'https://');
+    }
+
+    teamHTML += `
+            <div class="col m3"></div>
+              <div class="col s12 m6">
+                <div class="card grey darken-4">
+                  <div class="row">
+                    <div class="col s2"></div>
+                    <div class="col s8 card-image waves-effect waves-block waves-light">
+                      <img src="${logoTeam}" />
+                    </div>
+                    <div class="col s2"></div>
+                  </div>
+                  <hr>
+                  <div class="card-content">
+                    <span class="truncate"><b>${data.name} (${data.tla})</b></span>
+                    <a href="${data.website}" target="_blank">  
+                      <p>${data.website}</p>
+                    </a>
+                    <hr>
+                    <p>Berdiri: ${data.founded}</p>
+                    <p>Stadion: ${data.venue}</p>
+                    <p>Warna: ${data.clubColors}</p>
+                    <p>E-mail: ${data.email}</p>
+                    <p>Telepon: ${data.phone}</p>
+                    <p>Alamat: ${data.address}</p>
+                  </div>
+                </div>
+              </div>
+            <div class="col m3"></div>
+          `;
+
+    data.squad.forEach(dataSquad => {
+      squadHTML +=
+        `
+                <li class="collection-item avatar">
+                  <div class="grey darken-4 collapsible-header">
+                    <i class="material-icons">person</i>
+                    ${dataSquad.name}
+                  </div>
+                  <div class="grey darken-4 collapsible-body">
+                    <h5>${dataSquad.name}</h5>
+                    <p>Posisi       : ${dataSquad.position}</p>
+                    <p>TTL          : ${dataSquad.countryOfBirth}, ${dataSquad.dateOfBirth}</p>
+                    <p>Kebangsaan   : ${dataSquad.nationality}</p>
+                    <p>No. Punggung : ${dataSquad.shirtNumber}</p>
+                    <p>Peran        : ${dataSquad.role}</p>
+                  </div>
+                </li>
+              `;
+    });
+    // Sisipkan komponen card ke dalam elemen dengan id #content
+    document.getElementById("squad").innerHTML = squadHTML;
+    document.getElementById("team").innerHTML = teamHTML;
+  });
 }

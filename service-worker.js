@@ -1,4 +1,4 @@
-const CACHE_NAME = 'firstpwa-v8.10';
+const CACHE_NAME = 'firstpwa-v8.11';
 var urlsToCache = [
 	'/',
 	'/favicon.ico',
@@ -6,8 +6,9 @@ var urlsToCache = [
 	'/index.html',
 	'/standing.html',
 	'/team.html',
+	'/manifest.json',
 	'/pages/home.html',
-	'/pages/challenge.html',
+	'/pages/saved.html',
 	'/pages/about.html',
 	'/pages/contact.html',
 	'/css/materialize.min.css',
@@ -30,7 +31,6 @@ var urlsToCache = [
 	'/img/liga/PPL.png',
 	'/img/liga/SA.png',
 	'/img/liga/WC.png',
-	'/manifest.json',
 	'/icons/icon.png',
 	'/icons/icon-192x192.png',
 	'/icons/facebook.svg',
@@ -51,21 +51,6 @@ self.addEventListener('install', function (event) {
 	);
 })
 
-self.addEventListener('activate', function (event) {
-	event.waitUntil(
-		caches.keys()
-		.then(function (cacheNames) {
-			return Promise.all(
-				cacheNames.map(function (cacheName) {
-					if (cacheName != CACHE_NAME) {
-						console.log("ServiceWorker: cache " + cacheName + " dihapus");
-						return caches.delete(cacheName);
-					}
-				})
-			);
-		})
-	);
-})
 
 self.addEventListener("fetch", function (event) {
 	var baseUrl = "https://api.football-data.org/v2/";
@@ -88,3 +73,19 @@ self.addEventListener("fetch", function (event) {
 		)
 	}
 });
+
+self.addEventListener('activate', function (event) {
+	event.waitUntil(
+		caches.keys()
+		.then(function (cacheNames) {
+			return Promise.all(
+				cacheNames.map(function (cacheName) {
+					if (cacheName != CACHE_NAME) {
+						console.log("ServiceWorker: cache " + cacheName + " dihapus");
+						return caches.delete(cacheName);
+					}
+				})
+			);
+		})
+	);
+})
