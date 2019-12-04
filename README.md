@@ -11,17 +11,6 @@ Tidak hanya terbatas pada klasemen saja, berikut fitur lainnya:
 
 ---
 
-### Screenshot
-![Screenshot 1](https://pbs.twimg.com/media/EK9hprCUcAAek4b?format=jpg&name=large)
-![Screenshot 2](https://pbs.twimg.com/media/EK9hprGUwAEYzi0?format=jpg&name=large)
-![Screenshot 3](https://pbs.twimg.com/media/EK9hprEUEAAJsYw?format=jpg&name=large)
-![Screenshot 4](https://pbs.twimg.com/media/EK9hprEUYAA1fo2?format=png&name=large)
-![Screenshot 5](https://pbs.twimg.com/media/EK9hU6CVAAAUvlV?format=jpg&name=large)
-![Screenshot 6](https://pbs.twimg.com/media/EK9hU6AUcAAd4gT?format=jpg&name=large)
-![Screenshot 7](https://pbs.twimg.com/media/EK9hU6HVUAAuYWm?format=jpg&name=large)
-![Screenshot 8](https://pbs.twimg.com/media/EK9hU6BUUAA7LAR?format=png&name=large)
-
-
 ### Video
 [![RuangBola](http://img.youtube.com/vi/LAdELCbRGN8/0.jpg)](https://www.youtube.com/watch?v=LAdELCbRGN8&t=4s "RuangBola")
 
@@ -38,6 +27,16 @@ Tidak hanya terbatas pada klasemen saja, berikut fitur lainnya:
 
 ### Created By
 - [firmanjabar](https://github.com/firmanjabar)
+
+### Screenshot
+![Screenshot 1](https://pbs.twimg.com/media/EK9hprCUcAAek4b?format=jpg&name=small)
+![Screenshot 2](https://pbs.twimg.com/media/EK9hprGUwAEYzi0?format=jpg&name=small)
+![Screenshot 3](https://pbs.twimg.com/media/EK9hprEUEAAJsYw?format=jpg&name=small)
+![Screenshot 4](https://pbs.twimg.com/media/EK9hprEUYAA1fo2?format=png&name=small)
+![Screenshot 5](https://pbs.twimg.com/media/EK9hU6CVAAAUvlV?format=jpg&name=small)
+![Screenshot 6](https://pbs.twimg.com/media/EK9hU6AUcAAd4gT?format=jpg&name=small)
+![Screenshot 7](https://pbs.twimg.com/media/EK9hU6HVUAAuYWm?format=jpg&name=small)
+![Screenshot 8](https://pbs.twimg.com/media/EK9hU6BUUAA7LAR?format=png&name=small)
 
 ---
 
