@@ -86,9 +86,9 @@
         </div>
 
         <div class="fixed-action-btn">
-            <a class="btn-floating btn-large indigo darken-4 pulse" id="save">
+            <button class="btn-floating btn-large indigo darken-4 pulse" id="save">
                 <i class="large material-icons">save</i>
-            </a>
+            </button>
         </div>
     </div>
 
@@ -115,9 +115,8 @@
         }
 
         document.addEventListener("DOMContentLoaded", function () {
-            getLastMatch();
             getNextMatch();
-            getTeam();
+            getLastMatch();
 
             // COLLAPSE
             var collapse = document.querySelectorAll('.collapsible');
@@ -139,10 +138,8 @@
                 getSavedTeam();
             } else {
                 var item = getTeam();
-                console.log(getLastMatch());
-                console.log(getNextMatch());
-                console.log(item);
-                console.log('halo');
+                // console.log(item);
+                // console.log('halo');
             }
 
             checkFavorite(forDelete).then((msg) => {

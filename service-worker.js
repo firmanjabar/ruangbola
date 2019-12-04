@@ -1,4 +1,4 @@
-const CACHE_NAME = 'firstpwa-v8.11';
+const CACHE_NAME = 'firstpwa-v8.13';
 var urlsToCache = [
 	'/',
 	'/favicon.ico',
@@ -15,6 +15,10 @@ var urlsToCache = [
 	'/css/styles.css',
 	'/js/materialize.min.js',
 	'/js/script.js',
+	'/js/api.js',
+	'/js/cek_sw.js',
+	'/js/ruang_bola_db.js',
+	'/js/idb/lib/idb.js',
 	'/img/firman.jpx',
 	'/img/background2.jpx',
 	'/img/background3.jpx',
@@ -39,7 +43,6 @@ var urlsToCache = [
 	'/icons/github.svg',
 	'/icons/linkedin.svg',
 	'/icons/menu.svg',
-	'/js/api.js',
 ];
 
 self.addEventListener('install', function (event) {
@@ -88,4 +91,25 @@ self.addEventListener('activate', function (event) {
 			);
 		})
 	);
-})
+});
+
+self.addEventListener('push', function (event) {
+	var body;
+	if (event.data) {
+		body = event.data.text();
+	} else {
+		body = 'Push message no payload';
+	}
+	var options = {
+		body: body,
+		icon: 'icons/icon.png',
+		vibrate: [100, 50, 100],
+		data: {
+			dateOfArrival: Date.now(),
+			primaryKey: 1
+		}
+	};
+	event.waitUntil(
+		self.registration.showNotification('Push Notification', options)
+	);
+});

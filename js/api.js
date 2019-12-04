@@ -120,7 +120,7 @@ function getStanding() {
               <div class="col m3 l4"></div>
                 <div class="col s12 m6 l4">
                   <div class="card grey darken-4">
-                    <div class="card-image waves-effect waves-block waves-light">
+                    <div class="white card-image waves-effect waves-block waves-light">
                       <img src="img/liga/${data.competition.code}.png" />
                     </div>
                     <hr>
@@ -161,7 +161,7 @@ function getStanding() {
               <div class="col m3 l4"></div>
                 <div class="col s12 m6 l4">
                   <div class="card grey darken-4">
-                    <div class="card-image waves-effect waves-block waves-light">
+                    <div class="white card-image waves-effect waves-block waves-light">
                       <img src="img/liga/${data.competition.code}.png" />
                     </div>
                     <hr>
@@ -230,7 +230,7 @@ function getStanding() {
               <div class="col m3 l4"></div>
                 <div class="col s12 m6 l4">
                   <div class="card grey darken-4">
-                    <div class="card-image waves-effect waves-block waves-light">
+                    <div class="white card-image waves-effect waves-block waves-light">
                       <img src="img/liga/${data.competition.code}.png" />
                     </div>
                     <hr>
@@ -271,7 +271,7 @@ function getStanding() {
               <div class="col m3 l4"></div>
                 <div class="col s12 m6 l4">
                   <div class="card grey darken-4">
-                    <div class="card-image waves-effect waves-block waves-light">
+                    <div class="white card-image waves-effect waves-block waves-light">
                       <img src="img/liga/${data.competition.code}.png" />
                     </div>
                     <hr>
@@ -329,25 +329,27 @@ function getStanding() {
 }
 
 function getTeam() {
-  // Ambil nilai query parameter (?id=)
-  let urlParams = new URLSearchParams(window.location.search);
-  let idParam = urlParams.get("id");
+  return new Promise(function (resolve, reject) {
+    // Ambil nilai query parameter (?id=)
+    let urlParams = new URLSearchParams(window.location.search);
+    let idParam = urlParams.get("id");
 
-  if ('caches' in window) {
-    caches.match(base_url + "teams/" + idParam).then(function (response) {
-      if (response) {
-        response.json().then(function (data) {
-          let squadHTML = "";
-          let teamHTML = "";
+    if ('caches' in window) {
+      caches.match(base_url + "teams/" + idParam).then(function (response) {
+        if (response) {
+          response.json().then(function (data) {
+            // console.log(data);
+            let squadHTML = "";
+            let teamHTML = "";
 
-          let logoTeam = data.crestUrl;
-          if (logoTeam == null || logoTeam == '') {
-            logoTeam = 'img/liga/404.png';
-          } else {
-            logoTeam = logoTeam.replace(/^http:\/\//i, 'https://');
-          }
+            let logoTeam = data.crestUrl;
+            if (logoTeam == null || logoTeam == '') {
+              logoTeam = 'img/liga/404.png';
+            } else {
+              logoTeam = logoTeam.replace(/^http:\/\//i, 'https://');
+            }
 
-          teamHTML += `
+            teamHTML += `
             <div class="col m3"></div>
               <div class="col s12 m6">
                 <div class="card grey darken-4">
@@ -377,9 +379,9 @@ function getTeam() {
             <div class="col m3"></div>
           `;
 
-          data.squad.forEach(dataSquad => {
-            squadHTML +=
-              `
+            data.squad.forEach(dataSquad => {
+              squadHTML +=
+                `
                 <li class="collection-item avatar">
                   <div class="grey darken-4 collapsible-header">
                     <i class="material-icons">person</i>
@@ -395,29 +397,31 @@ function getTeam() {
                   </div>
                 </li>
               `;
+            });
+            // Sisipkan komponen card ke dalam elemen dengan id #content
+            document.getElementById("squad").innerHTML = squadHTML;
+            document.getElementById("team").innerHTML = teamHTML;
+
+            resolve(data);
           });
-          // Sisipkan komponen card ke dalam elemen dengan id #content
-          document.getElementById("squad").innerHTML = squadHTML;
-          document.getElementById("team").innerHTML = teamHTML;
-        });
-      }
-    })
-  }
-  fetchApi(base_url + "teams/" + idParam)
-    .then(status)
-    .then(json)
-    .then(function (data) {
-      let squadHTML = "";
-      let teamHTML = "";
+        }
+      })
+    }
+    fetchApi(base_url + "teams/" + idParam)
+      .then(status)
+      .then(json)
+      .then(function (data) {
+        let squadHTML = "";
+        let teamHTML = "";
 
-      let logoTeam = data.crestUrl;
-      if (logoTeam == null || logoTeam == '') {
-        logoTeam = 'img/liga/404.png';
-      } else {
-        logoTeam = logoTeam.replace(/^http:\/\//i, 'https://');
-      }
+        let logoTeam = data.crestUrl;
+        if (logoTeam == null || logoTeam == '') {
+          logoTeam = 'img/liga/404.png';
+        } else {
+          logoTeam = logoTeam.replace(/^http:\/\//i, 'https://');
+        }
 
-      teamHTML += `
+        teamHTML += `
         <div class="col m3"></div>
           <div class="col s12 m6">
             <div class="card grey darken-4">
@@ -447,9 +451,9 @@ function getTeam() {
         <div class="col m3"></div>
         `;
 
-      data.squad.forEach(dataSquad => {
-        squadHTML +=
-          `
+        data.squad.forEach(dataSquad => {
+          squadHTML +=
+            `
           <li class="collection-item avatar">
             <div class="grey darken-4 collapsible-header">
               <i class="material-icons">person</i>
@@ -465,11 +469,14 @@ function getTeam() {
             </div>
         </li>
           `;
+        });
+        // Sisipkan komponen card ke dalam elemen dengan id #content
+        document.getElementById("squad").innerHTML = squadHTML;
+        document.getElementById("team").innerHTML = teamHTML;
+
+        resolve(data);
       });
-      // Sisipkan komponen card ke dalam elemen dengan id #content
-      document.getElementById("squad").innerHTML = squadHTML;
-      document.getElementById("team").innerHTML = teamHTML;
-    });
+  });
 }
 
 function getLastMatch() {
@@ -485,6 +492,15 @@ function getLastMatch() {
 
           let lastMatch = data.matches[data.matches.length - 1];
           let ts = new Date(lastMatch.utcDate);
+          const options = {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            timeZoneName: 'short'
+          };
 
           function getLogoHome(id) {
             caches.match(base_url + "teams/" + id).then(function (response) {
@@ -591,7 +607,7 @@ function getLastMatch() {
             </div>
             <div class="grey darken-4 collapsible-body center-align">
                 <h6><b>${lastMatch.competition.name}</b></h6>
-                <p>${ts.toLocaleString()}</p>
+                <p>${ts.toLocaleDateString('en-GB', options)}</p>
                 <p>wasit - ${lastMatch.referees[0].name}</p>
             </div>
           `;
@@ -609,6 +625,15 @@ function getLastMatch() {
 
       let lastMatch = data.matches[data.matches.length - 1];
       let ts = new Date(lastMatch.utcDate);
+      const options = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        timeZoneName: 'short'
+      };
 
       function getLogoHome(id) {
         caches.match(base_url + "teams/" + id).then(function (response) {
@@ -715,7 +740,7 @@ function getLastMatch() {
         </div>
         <div class="grey darken-4 collapsible-body center-align">
             <h6><b>${lastMatch.competition.name}</b></h6>
-            <p>${ts.toLocaleString()}</p>
+            <p>${ts.toLocaleDateString('en-GB', options)}</p>
             <p>wasit - ${lastMatch.referees[0].name}</p>
         </div>
       `;
@@ -737,6 +762,16 @@ function getNextMatch() {
 
           let nextMatch = data.matches[0];
           let ts = new Date(nextMatch.utcDate);
+          const options = {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            timeZoneName: 'short'
+          };
+          // console.log(ts.toLocaleDateString('us-US', options));
 
           function getHome(id) {
             caches.match(base_url + "teams/" + id).then(function (response) {
@@ -836,14 +871,14 @@ function getNextMatch() {
                 <div class="col s12 m5 center-align" id="next-home">
                 </div>
                 <div class="col s12 m2 center-align">
-                    <p>${nextMatch.score.fullTime.homeTeam} - ${nextMatch.score.fullTime.awayTeam}</p>
+                    <p> vs </p>
                 </div>
                 <div class="col s12 m5 center-align" id="next-away">
                 </div>
             </div>
             <div class="grey darken-4 collapsible-body center-align">
                 <h6><b>${nextMatch.competition.name}</b></h6>
-                <p>${ts.toLocaleString()}</p>
+                <p>${ts.toLocaleDateString('en-GB', options)}</p>
             </div>
           `;
           // Sisipkan komponen card ke dalam elemen dengan id #content
@@ -860,6 +895,15 @@ function getNextMatch() {
 
       let nextMatch = data.matches[0];
       let ts = new Date(nextMatch.utcDate);
+      const options = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        timeZoneName: 'short'
+      };
 
       function getHome(id) {
         caches.match(base_url + "teams/" + id).then(function (response) {
@@ -959,14 +1003,14 @@ function getNextMatch() {
             <div class="col s12 m5 center-align" id="next-home">
             </div>
             <div class="col s12 m2 center-align">
-                <p>${nextMatch.score.fullTime.homeTeam} - ${nextMatch.score.fullTime.awayTeam}</p>
+                <p> vs </p>
             </div>
             <div class="col s12 m5 center-align" id="next-away">
             </div>
         </div>
         <div class="grey darken-4 collapsible-body center-align">
             <h6><b>${nextMatch.competition.name}</b></h6>
-            <p>${ts.toLocaleString()}</p>
+            <p>${ts.toLocaleDateString('en-GB', options)}</p>
         </div>
       `;
       // Sisipkan komponen card ke dalam elemen dengan id #content
@@ -974,114 +1018,56 @@ function getNextMatch() {
     });
 }
 
-function getSavedStanding() {
-  var urlParams = new URLSearchParams(window.location.search);
-  var idParam = urlParams.get("id");
+function getSavedTeam() {
+  getAllFavTeam().then(function (teams) {
+    // console.log(teams);
+    // Menyusun komponen card artikel secara dinamis
+    let teamHTML = "";
+    teams.forEach(function (data) {
 
-  getFavTeam(idParam).then(function (data) {
-    let standingsHTML = "";
-
-    data.standings[0].table.forEach(dataTeam => {
-      let urlTeamImage = dataTeam.team.crestUrl;
-      if (urlTeamImage == null || urlTeamImage == '') {
-        urlTeamImage = 'img/liga/404.png';
+      let logoTeam = data.crestUrl;
+      if (logoTeam == null || logoTeam == '') {
+        logoTeam = 'img/liga/404.png';
       } else {
-        urlTeamImage = urlTeamImage.replace(/^http:\/\//i, 'https://');
+        logoTeam = logoTeam.replace(/^http:\/\//i, 'https://');
       }
-      standingsHTML +=
-        `
-          <div class="col m3 l4"></div>
-            <div class="col s12 m6 l4">
+
+      teamHTML += `
+        <div class="row" >
+          <div class="col m4"></div>
+            <div class="col s12 m4">
+            <blockquote class="black-text">Click logo to see details</blockquote>
               <div class="card grey darken-4">
-                <div class="card-image waves-effect waves-block waves-light">
-                  <img src="img/liga/${data.competition.code}.png" />
+                <div class="row">
+                  <a href="./team.html?id=${data.id}">
+                    <div class="col s2"></div>
+                      <div class="col s8 card-image waves-effect waves-block waves-light">
+                        <img src="${logoTeam}" />
+                      </div>
+                    <div class="col s2"></div>
+                  </a>
                 </div>
                 <hr>
                 <div class="card-content">
-                  <span class="truncate"><b>${data.competition.name}</b></span>
-                  <p>${data.competition.area.name}</p>
+                  <span class="truncate"><b>${data.name} (${data.tla})</b></span>
+                  <a href="${data.website}" target="_blank">  
+                    <p>${data.website}</p>
+                  </a>
                   <hr>
-                  <p>Kode Liga: ${data.competition.code}</p>
-                  <p>Mulai: ${data.season.startDate}</p>
-                  <p>Berakhir: ${data.season.endDate}</p>
-                  <p>Pertandingan: ${data.season.currentMatchday}</p>
+                  <p>Berdiri: ${data.founded}</p>
+                  <p>Stadion: ${data.venue}</p>
+                  <p>Warna: ${data.clubColors}</p>
+                  <p>E-mail: ${data.email}</p>
+                  <p>Telepon: ${data.phone}</p>
+                  <p>Alamat: ${data.address}</p>
                 </div>
               </div>
             </div>
-          <div class="col m3 l4"></div>
+          <div class="col m4"></div>
+        </div>
         `;
     });
-
-    document.getElementById("leagues").innerHTML = standingsHTML;
-  });
-}
-
-function getSavedTeam() {
-  var urlParams = new URLSearchParams(window.location.search);
-  var idParam = urlParams.get("id");
-
-  getFavTeam(idParam).then(function (data) {
-    let squadHTML = "";
-    let teamHTML = "";
-
-    let logoTeam = data.crestUrl;
-    if (logoTeam == null || logoTeam == '') {
-      logoTeam = 'img/liga/404.png';
-    } else {
-      logoTeam = logoTeam.replace(/^http:\/\//i, 'https://');
-    }
-
-    teamHTML += `
-            <div class="col m3"></div>
-              <div class="col s12 m6">
-                <div class="card grey darken-4">
-                  <div class="row">
-                    <div class="col s2"></div>
-                    <div class="col s8 card-image waves-effect waves-block waves-light">
-                      <img src="${logoTeam}" />
-                    </div>
-                    <div class="col s2"></div>
-                  </div>
-                  <hr>
-                  <div class="card-content">
-                    <span class="truncate"><b>${data.name} (${data.tla})</b></span>
-                    <a href="${data.website}" target="_blank">  
-                      <p>${data.website}</p>
-                    </a>
-                    <hr>
-                    <p>Berdiri: ${data.founded}</p>
-                    <p>Stadion: ${data.venue}</p>
-                    <p>Warna: ${data.clubColors}</p>
-                    <p>E-mail: ${data.email}</p>
-                    <p>Telepon: ${data.phone}</p>
-                    <p>Alamat: ${data.address}</p>
-                  </div>
-                </div>
-              </div>
-            <div class="col m3"></div>
-          `;
-
-    data.squad.forEach(dataSquad => {
-      squadHTML +=
-        `
-                <li class="collection-item avatar">
-                  <div class="grey darken-4 collapsible-header">
-                    <i class="material-icons">person</i>
-                    ${dataSquad.name}
-                  </div>
-                  <div class="grey darken-4 collapsible-body">
-                    <h5>${dataSquad.name}</h5>
-                    <p>Posisi       : ${dataSquad.position}</p>
-                    <p>TTL          : ${dataSquad.countryOfBirth}, ${dataSquad.dateOfBirth}</p>
-                    <p>Kebangsaan   : ${dataSquad.nationality}</p>
-                    <p>No. Punggung : ${dataSquad.shirtNumber}</p>
-                    <p>Peran        : ${dataSquad.role}</p>
-                  </div>
-                </li>
-              `;
-    });
     // Sisipkan komponen card ke dalam elemen dengan id #content
-    document.getElementById("squad").innerHTML = squadHTML;
-    document.getElementById("team").innerHTML = teamHTML;
+    document.getElementById("team-fav").innerHTML = teamHTML;
   });
 }

@@ -12,14 +12,31 @@ function saveFavTeam(team) {
         .then(function (db) {
             let tx = db.transaction("teams", "readwrite");
             let store = tx.objectStore("teams");
-            console.log(team);
+            // console.log(team);
             store.put(team);
             return tx.complete;
         })
         .then(function () {
-            console.log("Liga berhasil di simpan.");
+            const title = 'Data Team Berhasil disimpan!';
+            console.log(title);
+            const options = {
+                'body': `Club ${team.name} sudah tersimpan, cek Team Favorite.`,
+                'badge': 'icons/icon.png',
+                'icon': 'icons/icon.png',
+            };
+            if (Notification.permission === 'granted') {
+                navigator.serviceWorker.ready.then(function (registration) {
+                    registration.showNotification(title, options);
+                });
+            } else {
+                M.toast({
+                    html: `Club ${team.name} berhasil disimpan, cek Team Favorite.`
+                });
+            }
         }).catch(function () {
-            console.log('Liga gagal disimpan.');
+            M.toast({
+                html: 'Team gagal disimpan'
+            });
         });
 }
 
@@ -28,14 +45,30 @@ function deleteFavTeam(team) {
         .then(function (db) {
             let tx = db.transaction('teams', 'readwrite');
             let store = tx.objectStore('teams');
-            console.log(team);
+            // console.log(team);
             store.delete(team);
             return tx.complete;
         })
         .then(function () {
-            console.log("league berhasil dihapus");
+            const title = 'Data Team Berhasil dihapus!';
+            const options = {
+                'body': `Club berhasil dihapus dari list Favorite.`,
+                'badge': 'icons/icon.png',
+                'icon': 'icons/icon.png',
+            };
+            if (Notification.permission === 'granted') {
+                navigator.serviceWorker.ready.then(function (registration) {
+                    registration.showNotification(title, options);
+                });
+            } else {
+                M.toast({
+                    html: `Club berhasil dihapus dari list Favorite.`
+                });
+            }
         }).catch(function () {
-            console.log('league gagal dihapus.');
+            M.toast({
+                html: 'Team gagal dihapus'
+            });
         });
 }
 
@@ -48,7 +81,7 @@ function getAllFavTeam() {
                 return store.getAll();
             })
             .then(function (teams) {
-                console.log(teams);
+                // console.log(teams);
                 resolve(teams);
             });
     });
@@ -65,23 +98,8 @@ function checkFavorite(id) {
                 if (favorite !== undefined) {
                     resolve(true);
                 } else {
-                    reject(false);
+                    // reject(false);
                 }
-            });
-    });
-}
-
-function getFavTeam(id) {
-    let getId = parseInt(id);
-    return new Promise(function (resolve, reject) {
-        dbPromised
-            .then(function (db) {
-                let tx = db.transaction("teams", "readonly");
-                let store = tx.objectStore("teams");
-                return store.get(getId);
-            })
-            .then(function (teams) {
-                resolve(teams);
             });
     });
 }
