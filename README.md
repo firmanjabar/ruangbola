@@ -12,14 +12,14 @@ Tidak hanya terbatas pada klasemen saja, berikut fitur lainnya:
 ---
 
 ### Screenshot
-![Screenshot 1](https://twitter.com/FirmanJabar/status/1202287034720587776/photo/4)
-![Screenshot 2](https://twitter.com/FirmanJabar/status/1202287034720587776/photo/3)
-![Screenshot 3](https://twitter.com/FirmanJabar/status/1202287034720587776/photo/2)
-![Screenshot 4](https://twitter.com/FirmanJabar/status/1202287034720587776/photo/1)
-![Screenshot 5](https://twitter.com/FirmanJabar/status/1202286651835174912/photo/4)
-![Screenshot 6](https://twitter.com/FirmanJabar/status/1202286651835174912/photo/3)
-![Screenshot 7](https://twitter.com/FirmanJabar/status/1202286651835174912/photo/2)
-![Screenshot 8](https://twitter.com/FirmanJabar/status/1202286651835174912/photo/1)
+![Screenshot 1](https://pbs.twimg.com/media/EK9hprCUcAAek4b?format=jpg&name=large)
+![Screenshot 2](https://pbs.twimg.com/media/EK9hprGUwAEYzi0?format=jpg&name=large)
+![Screenshot 3](https://pbs.twimg.com/media/EK9hprEUEAAJsYw?format=jpg&name=large)
+![Screenshot 4](https://pbs.twimg.com/media/EK9hprEUYAA1fo2?format=png&name=large)
+![Screenshot 5](https://pbs.twimg.com/media/EK9hU6CVAAAUvlV?format=jpg&name=large)
+![Screenshot 6](https://pbs.twimg.com/media/EK9hU6AUcAAd4gT?format=jpg&name=large)
+![Screenshot 7](https://pbs.twimg.com/media/EK9hU6HVUAAuYWm?format=jpg&name=large)
+![Screenshot 8](https://pbs.twimg.com/media/EK9hU6BUUAA7LAR?format=png&name=large)
 
 
 ### Video
