@@ -43,6 +43,14 @@
             <div class="row grey darken-4" id="leagues">
                 <!-- Card berisi artikel akan disisipkan ke dalam sini. -->
             </div>
+            <blockquote class="black-text">Click to see detail Match Today</blockquote>
+            <div class="col s12 white-text">
+                <div>
+                    <ul class="collapsible" id="mt">
+                        <!-- Data Squad -->
+                    </ul>
+                </div>
+            </div>
             <blockquote class="black-text">Click logo or name to see details</blockquote>
             <table class="grey darken-4 highlight responsive-table centered">
                 <thead>
@@ -87,6 +95,11 @@
 
         document.addEventListener("DOMContentLoaded", function () {
             getStanding();
+            getMatchToday();
+
+            // COLLAPSE
+            var collapse = document.querySelectorAll('.collapsible');
+            M.Collapsible.init(collapse);
         });
     </script>
 </body>

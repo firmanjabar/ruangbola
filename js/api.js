@@ -1,6 +1,6 @@
 const base_url = "https://api.football-data.org/v2/";
 
-const api_token = 'b3dad9833b3a4b78af52563c2d2b6895';
+const api_token = 'f2b4627268804a9a89acccf30b7c8d84';
 
 let fetchApi = url => {
   return fetch(url, {
@@ -325,6 +325,135 @@ function getStanding() {
       // Sisipkan komponen card ke dalam elemen dengan id #content
       document.getElementById("standings").innerHTML = standingsHTML;
       document.getElementById("leagues").innerHTML = leagueHTML;
+    });
+}
+
+function getMatchToday() {
+  // Ambil nilai query parameter (?id=)
+  let urlParams = new URLSearchParams(window.location.search);
+  let idParam = urlParams.get("id");
+
+  let todaysDate = new Date();
+
+  let yyyy = todaysDate.getUTCFullYear().toString();
+  let mm = (todaysDate.getUTCMonth() + 1).toString();
+  let dd = todaysDate.getUTCDate().toString();
+
+  let mmChars = mm.split('');
+  let ddChars = dd.split('');
+
+  let res = yyyy + '-' + (mmChars[1] ? mm : "0" + mmChars[0]) + '-' + (ddChars[1] ? dd : "0" + ddChars[0]);
+
+  if ('caches' in window) {
+    caches.match(base_url + "competitions/" + idParam + "/matches?status=SCHEDULED&dateTo=" + res + "&dateFrom=" + res).then(function (response) {
+      if (response) {
+        response.json().then(function (data) {
+          let matchHTML = "";
+
+          if (data.count != 0) {
+            data.matches.forEach(match => {
+              let ts = new Date(match.utcDate);
+              const options = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+                timeZoneName: 'short'
+              };
+
+              matchHTML += `
+                <li class="collection-item avatar">
+                  <div class="row grey darken-4 collapsible-header valign-wrapper" style="margin:0px;">
+                      <div class="col s12 m5 center-align home">
+                        ${match.homeTeam.name}
+                      </div>
+                      <div class="col s12 m2 center-align">
+                          <p> vs </p>
+                      </div>
+                      <div class="col s12 m5 center-align away">
+                        ${match.awayTeam.name}
+                      </div>
+                  </div>
+                  <div class="grey darken-4 collapsible-body center-align">
+                      <h6><b>${data.competition.name}</b></h6>
+                      <p>Pekan ke-${match.matchday}</p>
+                      <p>${ts.toLocaleDateString('en-GB', options)}</p>
+                  </div>
+                </li>
+              `;
+              // Sisipkan komponen card ke dalam elemen dengan id #content
+              document.getElementById("mt").innerHTML = matchHTML;
+            });
+          } else {
+            matchHTML += `
+                <li class="collection-item avatar">
+                  <div class="row grey darken-4 collapsible-header valign-wrapper" style="margin:0px;">
+                      NO MATCHES TODAY! 😔
+                  </div>
+                </li>
+              `;
+            // Sisipkan komponen card ke dalam elemen dengan id #content
+            document.getElementById("mt").innerHTML = matchHTML;
+          }
+        });
+      }
+    });
+  }
+  fetchApi(base_url + "competitions/" + idParam + "/matches?status=SCHEDULED&dateTo=" + res + "&dateFrom=" + res)
+    .then(status)
+    .then(json)
+    .then(function (data) {
+      let matchHTML = "";
+
+      if (data.count != 0) {
+        data.matches.forEach(match => {
+          let ts = new Date(match.utcDate);
+          const options = {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            timeZoneName: 'short'
+          };
+
+          matchHTML += `
+            <li class="collection-item avatar">
+              <div class="row grey darken-4 collapsible-header valign-wrapper" style="margin:0px;">
+                  <div class="col s12 m5 center-align home">
+                    ${match.homeTeam.name}
+                  </div>
+                  <div class="col s12 m2 center-align">
+                      <p> vs </p>
+                  </div>
+                  <div class="col s12 m5 center-align away">
+                    ${match.awayTeam.name}
+                  </div>
+              </div>
+              <div class="grey darken-4 collapsible-body center-align">
+                  <h6><b>${data.competition.name}</b></h6>
+                  <p>Pekan ke-${match.matchday}</p>
+                  <p>${ts.toLocaleDateString('en-GB', options)}</p>
+              </div>
+            </li>
+          `;
+          // Sisipkan komponen card ke dalam elemen dengan id #content
+          document.getElementById("mt").innerHTML = matchHTML;
+        });
+      } else {
+        matchHTML += `
+            <li class="collection-item avatar">
+              <div class="row grey darken-4 collapsible-header valign-wrapper" style="margin:0px;">
+                  NO MATCHES TODAY! 😔
+              </div>
+            </li>
+          `;
+        // Sisipkan komponen card ke dalam elemen dengan id #content
+        document.getElementById("mt").innerHTML = matchHTML;
+      }
     });
 }
 
