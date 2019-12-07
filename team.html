@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Ruang Bola</title>
+    <meta name="description" content="Ruang Bola" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/materialize.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/icons/icon.png">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <meta name="theme-color" content="#022F40" />
+    <link href="https://fonts.googleapis.com/css?family=Fascinate|Montserrat:300,400,500,600,700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navigasi -->
+    <nav role="navigation">
+        <div class="nav-wrapper container">
+            <a id="logo-container" href="/" class="brand-logo logoFont"><span>Ruang</span>Bola</a>
+            <span>
+                <a href="./index.html" class="sidenav-trigger" data-target="nav-mobile">
+                    <i class="material-icons">arrow_back</i>
+                </a>
+            </span>
+
+            <ul class="topnav right hide-on-med-and-down"></ul>
+            <ul id="nav-mobile" class="sidenav"></ul>
+        </div>
+    </nav>
+    <!-- Akhir Navigasi -->
+
+    <div class="content" style="display: none;">
+        <!-- Content -->
+        <div class="container" id="body-content">
+            <div class="col s12">
+                <h4 class="center-align">Detail Team</h4>
+            </div>
+            <div class="col s12 grey darken-4 white-text">
+                <div class="row" id="team">
+                    <!-- Card berisi artikel akan disisipkan ke dalam sini. -->
+                </div>
+            </div>
+            <blockquote>Click to see detail Next & Last Match</blockquote>
+            <div class="col s12 white-text">
+                <div>
+                    <ul class="collapsible">
+                        <span class="black-text">
+                            <h6>&nbsp;&nbsp;&nbsp;&nbsp;Next Match</h6>
+                        </span>
+                        <li class="collection-item avatar" id="next-match">
+                            <!-- Data Next Match -->
+                        </li>
+                    </ul>
+                    <span class="black-text">
+                        <h6>&nbsp;&nbsp;&nbsp;&nbsp;Last Match</h6>
+                    </span>
+                    <ul class="collapsible" id="last-match">
+                        <!-- Data Last Match -->
+                    </ul>
+                </div>
+            </div>
+            <div class="white-text center-align">
+                <button class="indigo darken-4 waves-effect waves-light btn-large" type="button" id="btnLoadMore">
+                    Load More
+                </button>
+            </div>
+            <br>
+            <blockquote>Click to see detail Squad Profile</blockquote>
+            <div class="col s12 white-text">
+                <div>
+                    <ul class="collapsible" id="squad">
+                        <!-- Data Squad -->
+                    </ul>
+                </div>
+            </div>
+            <br>
+        </div>
+        <!-- Akhir Content -->
+
+        <div>
+            <div class="fixed-action-btn">
+                <a class="btn-floating btn-large red darken-3" id="delete">
+                    <i class="large material-icons">delete</i>
+                </a>
+            </div>
+
+            <div class="fixed-action-btn">
+                <button class="btn-floating btn-large indigo darken-4 pulse" id="save">
+                    <i class="large material-icons">save</i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="preloader-wrapper big active" style="display: block;">
+        <div class="spinner-layer spinner-blue-only">
+            <div class="circle-clipper left">
+                <div class="circle"></div>
+            </div>
+            <div class="gap-patch">
+                <div class="circle"></div>
+            </div>
+            <div class="circle-clipper right">
+                <div class="circle"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/materialize.min.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/getTeam.js"></script>
+    <script src="js/getLastMatch.js"></script>
+    <script src="js/getNextMatch.js"></script>
+    <script src="js/getSavedTeam.js"></script>
+    <!-- <script src="js/script.js"></script> -->
+    <script src="js/idb/lib/idb.js"></script>
+    <script src="js/ruang_bola_db.js"></script>
+    <script>
+        window.onload = function () {
+            setTimeout(function () {
+                document.querySelector(".content").style.display = "block";
+                document.querySelector(".preloader-wrapper").style.display = "none";
+
+            }, 2000);
+        }
+        // REGISTER SERVICE WORKER
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", function () {
+                navigator.serviceWorker
+                    .register("/service-worker.js")
+                    .then(function () {
+                        console.log("Pendaftaran ServiceWorker berhasil");
+                    })
+                    .catch(function () {
+                        console.log("Pendaftaran ServiceWorker gagal");
+                    });
+            });
+        } else {
+            console.log("ServiceWorker belum didukung browser ini.");
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            getNextMatch();
+            getLastMatch();
+
+            // COLLAPSE
+            var collapse = document.querySelectorAll('.collapsible');
+            M.Collapsible.init(collapse);
+
+            var urlParams = new URLSearchParams(window.location.search);
+            var isFromSaved = Number(urlParams.get("saved"));
+            var forDelete = Number(urlParams.get("id"));
+
+            checkFavorite(forDelete);
+
+            var save = document.getElementById("save");
+            var del = document.getElementById("delete");
+
+            if (isFromSaved) {
+                // Hide fab jika dimuat dari indexed db
+                save.style.display = 'none';
+                // ambil artikel lalu tampilkan
+                getSavedTeam();
+            } else {
+                var item = getTeam();
+                // console.log(item);
+                // console.log('halo');
+            }
+
+            checkFavorite(forDelete).then((msg) => {
+                save.style.display = "none";
+                del.style.display = "block";
+            }).catch((msg) => {
+                save.style.display = "block";
+                del.style.display = "none";
+            });
+
+            save.onclick = function () {
+                console.log("Tombol save di klik.");
+                item.then(function (team) {
+                    saveFavTeam(team);
+                });
+                save.style.display = "none";
+                del.style.display = "block";
+            };
+
+            del.onclick = function () {
+                console.log("Tombol delete di klik.");
+                deleteFavTeam(forDelete);
+                del.style.display = "none";
+                save.style.display = "block";
+            };
+        });
+    </script>
+</body>
+
+</html>

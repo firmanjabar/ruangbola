@@ -1,0 +1,134 @@
+/* colours */
+:root {
+    --primary: #022F40;
+    --secondary: #2A4B63;
+    --title: #FFFCF2;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+/* layout styles */
+nav {
+    background: var(--primary);
+    padding-bottom: 60px;
+    border-bottom: 8px solid var(--secondary);
+}
+
+nav a {
+    color: var(--title);
+}
+
+nav li a {
+    text-transform: uppercase;
+    color: var(--title);
+}
+
+.logoFont {
+    color: var(--title);
+    /* font-family: 'Fascinate', cursive; */
+    font-weight: 300;
+}
+
+.logoFont span {
+    font-weight: 800;
+}
+
+nav .sidenav-trigger {
+    margin: 0;
+}
+
+/* footer */
+.footerColor {
+    background-color: var(--secondary);
+}
+
+.spaceIcon {
+    padding: 7px;
+}
+
+/* Parallax */
+.parallax-container {
+    height: 250px;
+    width: 100%;
+}
+
+.parallax img {
+    width: 150%;
+}
+
+/* Card */
+.card-image img {
+    height: 38vh;
+    overflow: hidden;
+    padding: 15px;
+}
+
+.card-title {
+    font-weight: bold !important;
+    text-shadow: 2px 2px #ababab;
+    /* background-color: #ababab50; */
+}
+
+.price {
+    font-size: 12px;
+    display: inline;
+    margin-left: 6px;
+}
+
+.due {
+    font-size: 12px;
+    margin-left: 0px;
+}
+
+.realPrice {
+    font-size: 18px;
+    color: #2A4B63;
+    font-weight: bold;
+}
+
+/* ABOUT */
+.circle {
+    width: 30%;
+}
+
+blockquote {
+    border-left: 5px solid cornflowerblue;
+}
+
+/* PRELOADER */
+.preloader-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.hidden {
+    display: none;
+}
+
+#leagues a {
+    color: black;
+}
+
+@media (min-width: 767px) {
+
+    /* Parallax */
+    .parallax-container {
+        height: 400px;
+    }
+
+    .card-image img {
+        height: 22vw;
+        width: 100%;
+    }
+}
