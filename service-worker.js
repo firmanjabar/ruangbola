@@ -13,8 +13,13 @@ workbox.precaching.precacheAndRoute([
 	'/js/idb/lib/idb.js',
 	'/js/materialize.min.js',
 	'/img/firman.jpx',
-	'/img/background2.jpx',
-	'/img/background3.jpx',
+	{
+		url: '/img/background2.jpx',
+		revision: '2'
+	}, {
+		url: '/img/background3.jpx',
+		revision: '2'
+	},
 	'/img/liga/404.png',
 	'/img/liga/BL1.png',
 	'/img/liga/BSA.png',
@@ -37,7 +42,7 @@ workbox.precaching.precacheAndRoute([
 	},
 	{
 		url: '/index.html',
-		revision: '2'
+		revision: '3'
 	},
 	{
 		url: '/manifest.json',
