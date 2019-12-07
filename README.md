@@ -3,16 +3,19 @@ Submission ke-2 dari Kelas [Membangun Progressive Web Apps (MPWA) - Dicoding](ht
 
 Web App ini digunakan untuk melihat data klasemen dari 12 liga ternama di seluruh dunia, data diambil dari [Football.data.org](https://www.football-data.org/documentation/quickstart).
 Tidak hanya terbatas pada klasemen saja, berikut fitur lainnya:
-- __Detail Team__ dari setiap liga (nama, tahun berdiri, venue, alamat, kontak dsb.)
-- __Detail Squad__ dari setiap Team (biodata pemain dan pelatih, seperti kebangsaan, TTL, No.Punggung dsb.)
-- __Last Match__ dari setiap Team (menampilkan score akhir, waktu pertandingan, wasit dsb.)
-- __Next Match__ dari setiap Team (menampilkan pertandingan selanjutnya beserta Hari, Tanggal dan Waktu yang sudah diconvert ke lokal dg fungsi `toLocalDateString('en-GB', options)` dg penulisan style british).
+- __List of League__ menampilkan 12 liga.
+- __Detail of League__ menampilkan detail setiap liga dan klasemen terupdate.
+- __Match Today__ menampilkan pertandingan hari ini dari setiap liga.
+- __Detail Team__ menampilkan detail tim dari setiap liga (nama, tahun berdiri, venue, alamat, kontak dsb.)
+- __Detail Squad__ menampilkan detail squad dari setiap Team (biodata pemain dan pelatih, seperti kebangsaan, TTL, No.Punggung dsb.)
+- __Last Match__ menampilkan pertandingan terakhir dari setiap Team, ditambah dengan fitur tombol 'load more' (menampilkan score akhir, waktu pertandingan, wasit dsb.)
+- __Next Match__ menampilkan pertandingan yang akan datang dari setiap Team (menampilkan pertandingan selanjutnya beserta Hari, Tanggal dan Waktu yang sudah diconvert ke lokal dg fungsi `toLocalDateString('en-GB', options)` dg penulisan style british).
 - __Favorite__ add Team kesayangan ke Local Storage agar tidak susah mencari jika ingin melihat detail, pertandingan terakhir dan pertandingan selanjutnya. Cukup simpan team favorite, dan cek dihalaman Favorite.
 
 ---
 
 ### Video
-[![RuangBola](http://img.youtube.com/vi/LAdELCbRGN8/0.jpg)](https://www.youtube.com/watch?v=LAdELCbRGN8&t=4s "RuangBola")
+[![RuangBola](http://img.youtube.com/vi/LAdELCbRGN8/original.jpg)](https://www.youtube.com/watch?v=LAdELCbRGN8&t=4s "RuangBola")
 
 ### Built With
 - [Football.data.org](https://www.football-data.org/documentation/quickstart)

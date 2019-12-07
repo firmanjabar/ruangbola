@@ -12,7 +12,7 @@
   <link rel="apple-touch-icon" href="/icons/icon.png">
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
-  <meta name="theme-color" content="#00897B" />
+  <meta name="theme-color" content="#022F40" />
   <link href="https://fonts.googleapis.com/css?family=Fascinate|Montserrat:300,400,500,600,700&display=swap"
     rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -36,65 +36,92 @@
     </div>
   </nav>
   <!-- Akhir Navigasi -->
+  <div class="content" style="display: none;">
+    <div id="app" class="body-content"></div>
 
-  <div id="app" class="body-content"></div>
-
-  <!-- footer -->
-  <footer class="page-footer footerColor">
-    <div class="container">
-      <div class="row">
-        <div class="col l6 s12">
-          <h5 class="white-text logoFont"><span>Ruang</span>Bola</h5>
-          <p class="grey-text text-lighten-4">Ruang bola adalah progressive web apps yang menampilkan klasemen, team,
-            pertandingan, dan masih banyak lagi dari 12 liga yang paling populer di dunia.</p>
-        </div>
-
-        <div class="col l4 offset-l2 s12">
-          <h5 class="white-text">Social Media</h5>
-          <a target="_blank" href="https://facebook.com/firmanabduljabar">
-            <span style="font-size: 3em; color:black">
-              <i class="fab fa-facebook-square"></i>
-            </span>
-          </a>
-          <a target="_blank" href="https://instagram.com/firmanjabar">
-            <span style="font-size: 3em; color:black">
-              <i class="fab fa-instagram"></i>
-            </span>
-          </a>
-          <a target="_blank" href="https://twitter.com/firmanjabar">
-            <span style="font-size: 3em; color:black">
-              <i class="fab fa-twitter-square"></i>
-            </span>
-          </a>
-          <a target="_blank" href="https://github.com/firmanjabar">
-            <span style="font-size: 3em; color:black">
-              <i class="fab fa-github-square"></i>
-            </span>
-          </a>
-          <a target="_blank" href="https://linkedin.com/in/firmanabduljabar">
-            <span style="font-size: 3em; color:black">
-              <i class="fab fa-linkedin"></i>
-            </span>
-          </a>
-        </div>
-
-      </div>
-    </div>
-    <div class="footer-copyright">
+    <!-- footer -->
+    <footer class="page-footer footerColor">
       <div class="container">
-        © 2019 Copyright
-        <a class="grey-text text-lighten-4 right" href="https://firmanjabar.github.io">Firman Abdul Jabar</a>
+        <div class="row">
+          <div class="col l6 s12">
+            <h5 class="white-text logoFont"><span>Ruang</span>Bola</h5>
+            <p class="grey-text text-lighten-4">Ruang bola adalah progressive web apps yang menampilkan klasemen, team,
+              pertandingan, dan masih banyak lagi dari 12 liga yang paling populer di dunia.</p>
+          </div>
+
+          <div class="col l4 offset-l2 s12">
+            <h5 class="white-text">Social Media</h5>
+            <a target="_blank" href="https://facebook.com/firmanabduljabar">
+              <span style="font-size: 2.5em; color:white">
+                <i class="fab fa-facebook-square"></i>
+              </span>
+            </a>
+            <a target="_blank" href="https://instagram.com/firmanjabar">
+              <span style="font-size: 2.5em; color:white">
+                <i class="fab fa-instagram"></i>
+              </span>
+            </a>
+            <a target="_blank" href="https://twitter.com/firmanjabar">
+              <span style="font-size: 2.5em; color:white">
+                <i class="fab fa-twitter-square"></i>
+              </span>
+            </a>
+            <a target="_blank" href="https://github.com/firmanjabar">
+              <span style="font-size: 2.5em; color:white">
+                <i class="fab fa-github-square"></i>
+              </span>
+            </a>
+            <a target="_blank" href="https://linkedin.com/in/firmanabduljabar">
+              <span style="font-size: 2.5em; color:white">
+                <i class="fab fa-linkedin"></i>
+              </span>
+            </a>
+          </div>
+
+        </div>
+      </div>
+      <div class="footer-copyright">
+        <div class="container">
+          © 2019 Copyright
+          <a class="grey-text text-lighten-4 right" href="https://firmanjabar.github.io">Firman Abdul Jabar</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <div class="preloader-wrapper big active" style="display: block;">
+    <div class="spinner-layer spinner-blue-only">
+      <div class="circle-clipper left">
+        <div class="circle"></div>
+      </div>
+      <div class="gap-patch">
+        <div class="circle"></div>
+      </div>
+      <div class="circle-clipper right">
+        <div class="circle"></div>
       </div>
     </div>
-  </footer>
+  </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="js/materialize.min.js"></script>
   <script src="js/api.js"></script>
+  <script src="js/getCompetitions.js"></script>
+  <script src="js/getSavedTeam.js"></script>
   <script src="js/script.js"></script>
-  <script src="./js/cek_sw.js"></script>
-  <script src="./js/idb/lib/idb.js"></script>
-  <script src="./js/ruang_bola_db.js"></script>
+  <script src="js/cek_sw.js"></script>
+  <script src="js/idb/lib/idb.js"></script>
+  <script src="js/ruang_bola_db.js"></script>
+
+  <script>
+    window.onload = function () {
+      setTimeout(function () {
+        document.querySelector(".content").style.display = "block";
+        document.querySelector(".preloader-wrapper").style.display = "none";
+
+      }, 2000);
+    }
+  </script>
 </body>
 
 </html>

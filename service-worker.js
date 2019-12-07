@@ -1,24 +1,17 @@
-const CACHE_NAME = 'firstpwa-v8.14';
-var urlsToCache = [
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js');
+
+if (workbox) {
+	console.log(`Workbox berhasil dimuat 🎉`);
+} else {
+	console.log(`Workbox gagal dimuat 😬`);
+}
+
+workbox.precaching.precacheAndRoute([
 	'/',
 	'/favicon.ico',
-	'/nav.html',
-	'/index.html',
-	'/standing.html',
-	'/team.html',
-	'/manifest.json',
-	'/pages/home.html',
-	'/pages/saved.html',
-	'/pages/about.html',
-	'/pages/contact.html',
 	'/css/materialize.min.css',
-	'/css/styles.css',
-	'/js/materialize.min.js',
-	'/js/script.js',
-	'/js/api.js',
-	'/js/cek_sw.js',
-	'/js/ruang_bola_db.js',
 	'/js/idb/lib/idb.js',
+	'/js/materialize.min.js',
 	'/img/firman.jpx',
 	'/img/background2.jpx',
 	'/img/background3.jpx',
@@ -37,61 +30,160 @@ var urlsToCache = [
 	'/img/liga/WC.png',
 	'/icons/icon.png',
 	'/icons/icon-192x192.png',
-	'/icons/facebook.svg',
-	'/icons/instagram.svg',
-	'/icons/twitter.svg',
-	'/icons/github.svg',
-	'/icons/linkedin.svg',
 	'/icons/menu.svg',
-];
+	{
+		url: '/css/styles.css',
+		revision: '1'
+	},
+	{
+		url: '/index.html',
+		revision: '1'
+	},
+	{
+		url: '/manifest.json',
+		revision: '1'
+	},
+	{
+		url: '/nav.html',
+		revision: '1'
+	},
+	{
+		url: '/standing.html',
+		revision: '1'
+	},
+	{
+		url: '/team.html',
+		revision: '1'
+	},
+	{
+		url: '/pages/home.html',
+		revision: '1'
+	},
+	{
+		url: '/pages/saved.html',
+		revision: '1'
+	},
+	{
+		url: '/js/script.js',
+		revision: '1'
+	},
+	{
+		url: '/js/api.js',
+		revision: '1'
+	},
+	{
+		url: '/js/getCompetitions.js',
+		revision: '1'
+	},
+	{
+		url: '/js/getLastMatch.js',
+		revision: '1'
+	},
+	{
+		url: '/js/getMatchToday.js',
+		revision: '1'
+	},
+	{
+		url: '/js/getStandings.js',
+		revision: '1'
+	},
+	{
+		url: '/js/getTeam.js',
+		revision: '1'
+	},
+	{
+		url: '/js/getNextMatch.js',
+		revision: '1'
+	},
+	{
+		url: '/js/getSavedTeam.js',
+		revision: '1'
+	},
+	{
+		url: '/js/cek_sw.js',
+		revision: '1'
+	},
+	{
+		url: '/js/ruang_bola_db.js',
+		revision: '1'
+	},
+]);
 
-self.addEventListener('install', function (event) {
-	event.waitUntil(
-		caches.open(CACHE_NAME)
-		.then(function (cache) {
-			return cache.addAll(urlsToCache);
-		})
-	);
-})
+workbox.routing.registerRoute(
+	/^https:\/\/api\.football\-data\.org\/v2\//,
+	workbox.strategies.staleWhileRevalidate({
+		cacheName: 'football-data-api',
+		plugins: [
+			new workbox.expiration.Plugin({
+				maxEntries: 60,
+				maxAgeSeconds: 30 * 24 * 60 * 60, // 30 hari
+			}),
+		],
+	})
+);
 
+workbox.routing.registerRoute(
+	/\.(?:png|jpx|css|svg)$/,
+	workbox.strategies.cacheFirst({
+		cacheName: 'images',
+		plugins: [
+			new workbox.expiration.Plugin({
+				maxEntries: 50,
+			}),
+		],
+	})
+);
 
-self.addEventListener("fetch", function (event) {
-	var baseUrl = "https://api.football-data.org/v2/";
-	if (event.request.url.indexOf(baseUrl) > -1) {
-		event.respondWith(
-			caches.open(CACHE_NAME).then(function (cache) {
-				return fetch(event.request).then(function (response) {
-					cache.put(event.request.url, response.clone());
-					return response;
-				})
-			})
-		);
-	} else {
-		event.respondWith(
-			caches.match(event.request, {
-				ignoreSearch: true
-			}).then(function (response) {
-				return response || fetch(event.request);
-			})
-		)
-	}
-});
+workbox.routing.registerRoute(
+	new RegExp('/js/'),
+	workbox.strategies.staleWhileRevalidate({
+		cacheName: 'js'
+	})
+);
+workbox.routing.registerRoute(
+	new RegExp('/index.html'),
+	workbox.strategies.staleWhileRevalidate({
+		cacheName: 'index'
+	})
+);
+workbox.routing.registerRoute(
+	new RegExp('/standing.html'),
+	workbox.strategies.staleWhileRevalidate({
+		cacheName: 'standing',
+		plugins: [
+			new workbox.expiration.Plugin({
+				maxEntries: 12,
+				maxAgeSeconds: 30 * 24 * 60 * 60, // 30 hari
+			}),
+		],
+	})
+);
+workbox.routing.registerRoute(
+	new RegExp('/team.html'),
+	workbox.strategies.staleWhileRevalidate({
+		cacheName: 'team',
+		plugins: [
+			new workbox.expiration.Plugin({
+				maxEntries: 50,
+				maxAgeSeconds: 30 * 24 * 60 * 60, // 30 hari
+			}),
+		],
+	})
+);
 
-self.addEventListener('activate', function (event) {
-	event.waitUntil(
-		caches.keys()
-		.then(function (cacheNames) {
-			return Promise.all(
-				cacheNames.map(function (cacheName) {
-					if (cacheName != CACHE_NAME) {
-						console.log("ServiceWorker: cache " + cacheName + " dihapus");
-						return caches.delete(cacheName);
-					}
-				})
-			);
-		})
-	);
-});
+workbox.routing.registerRoute(
+	new RegExp('/pages/'),
+	workbox.strategies.networkFirst({
+		networkTimeoutSeconds: 3,
+		cacheName: 'pages',
+		plugins: [
+			new workbox.expiration.Plugin({
+				maxEntries: 10,
+				maxAgeSeconds: 30 * 24 * 60 * 60, // 30 hari
+			}),
+		],
+	})
+);
 
 self.addEventListener('push', function (event) {
 	var body;

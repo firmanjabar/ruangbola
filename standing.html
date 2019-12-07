@@ -12,7 +12,7 @@
     <link rel="apple-touch-icon" href="/icons/icon.png">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    <meta name="theme-color" content="#00897B" />
+    <meta name="theme-color" content="#022F40" />
     <link href="https://fonts.googleapis.com/css?family=Fascinate|Montserrat:300,400,500,600,700&display=swap"
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -35,48 +35,73 @@
     </nav>
     <!-- Akhir Navigasi -->
 
-    <div class="container" id="body-content">
-        <div class="col s12">
-            <h4 class="center-align">Klasemen - Liga</h4>
-        </div>
-        <div class="col s12 white-text">
-            <div class="row grey darken-4" id="leagues">
-                <!-- Card berisi artikel akan disisipkan ke dalam sini. -->
+    <div class="content" style="display: none;">
+        <div class="container" id="body-content">
+            <div class="col s12">
+                <h4 class="center-align">Klasemen - Liga</h4>
             </div>
-            <blockquote class="black-text">Click to see detail Match Today</blockquote>
             <div class="col s12 white-text">
-                <div>
-                    <ul class="collapsible" id="mt">
-                        <!-- Data Squad -->
-                    </ul>
+                <div class="row grey darken-4" id="leagues">
+                    <!-- Card berisi artikel akan disisipkan ke dalam sini. -->
                 </div>
+                <blockquote class="black-text">Click to see detail Match Today</blockquote>
+                <div class="col s12 white-text">
+                    <div>
+                        <ul class="collapsible" id="mt">
+                            <!-- Data Squad -->
+                        </ul>
+                    </div>
+                </div>
+                <blockquote class="black-text">Click logo or name to see details</blockquote>
+                <table class="grey darken-4 highlight responsive-table centered">
+                    <thead>
+                        <tr class="darken-2 z-depth-5">
+                            <th>Peringkat<br>&nbsp;</th>
+                            <th>Logo<br>&nbsp;</th>
+                            <th>Club<br>&nbsp;</th>
+                            <th>M<br>&nbsp;</th>
+                            <th>M<br>&nbsp;</th>
+                            <th>S<br>&nbsp;</th>
+                            <th>K<br>&nbsp;</th>
+                            <th>GM<br>&nbsp;</th>
+                            <th>GA<br>&nbsp;</th>
+                            <th>SG<br>&nbsp;</th>
+                            <th>Poin<br>&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody id="standings"></tbody>
+                </table>
             </div>
-            <blockquote class="black-text">Click logo or name to see details</blockquote>
-            <table class="grey darken-4 highlight responsive-table centered">
-                <thead>
-                    <tr class="darken-2 z-depth-5">
-                        <th>Peringkat<br>&nbsp;</th>
-                        <th>Logo<br>&nbsp;</th>
-                        <th>Club<br>&nbsp;</th>
-                        <th>M<br>&nbsp;</th>
-                        <th>M<br>&nbsp;</th>
-                        <th>S<br>&nbsp;</th>
-                        <th>K<br>&nbsp;</th>
-                        <th>GM<br>&nbsp;</th>
-                        <th>GA<br>&nbsp;</th>
-                        <th>SG<br>&nbsp;</th>
-                        <th>Poin<br>&nbsp;</th>
-                    </tr>
-                </thead>
-                <tbody id="standings"></tbody>
-            </table>
+            <br>
         </div>
-        <br>
+    </div>
+
+    <div class="preloader-wrapper big active" style="display: block;">
+        <div class="spinner-layer spinner-blue-only">
+            <div class="circle-clipper left">
+                <div class="circle"></div>
+            </div>
+            <div class="gap-patch">
+                <div class="circle"></div>
+            </div>
+            <div class="circle-clipper right">
+                <div class="circle"></div>
+            </div>
+        </div>
     </div>
 
     <script src="js/materialize.min.js"></script>
     <script src="js/api.js"></script>
+    <script src="js/getStandings.js"></script>
+    <script src="js/getMatchToday.js"></script>
     <script>
+        window.onload = function () {
+            setTimeout(function () {
+                document.querySelector(".content").style.display = "block";
+                document.querySelector(".preloader-wrapper").style.display = "none";
+
+            }, 2000);
+        }
         // REGISTER SERVICE WORKER
         if ("serviceWorker" in navigator) {
             window.addEventListener("load", function () {

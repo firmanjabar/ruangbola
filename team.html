@@ -12,7 +12,7 @@
     <link rel="apple-touch-icon" href="/icons/icon.png">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    <meta name="theme-color" content="#00897B" />
+    <meta name="theme-color" content="#022F40" />
     <link href="https://fonts.googleapis.com/css?family=Fascinate|Montserrat:300,400,500,600,700&display=swap"
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -35,69 +35,100 @@
     </nav>
     <!-- Akhir Navigasi -->
 
-    <!-- Content -->
-    <div class="container" id="body-content">
-        <div class="col s12">
-            <h4 class="center-align">Detail Team</h4>
-        </div>
-        <div class="col s12 grey darken-4 white-text">
-            <div class="row" id="team">
-                <!-- Card berisi artikel akan disisipkan ke dalam sini. -->
+    <div class="content" style="display: none;">
+        <!-- Content -->
+        <div class="container" id="body-content">
+            <div class="col s12">
+                <h4 class="center-align">Detail Team</h4>
             </div>
-        </div>
-        <blockquote>Click to see detail Next & Last Match</blockquote>
-        <div class="col s12 white-text">
-            <div>
-                <ul class="collapsible">
-                    <span class="black-text">
-                        <h6>&nbsp;&nbsp;&nbsp;&nbsp;Next Match</h6>
-                    </span>
-                    <li class="collection-item avatar" id="next-match">
-                        <!-- Data Last Match -->
-                    </li>
-                </ul>
-                <ul class="collapsible">
+            <div class="col s12 grey darken-4 white-text">
+                <div class="row" id="team">
+                    <!-- Card berisi artikel akan disisipkan ke dalam sini. -->
+                </div>
+            </div>
+            <blockquote>Click to see detail Next & Last Match</blockquote>
+            <div class="col s12 white-text">
+                <div>
+                    <ul class="collapsible">
+                        <span class="black-text">
+                            <h6>&nbsp;&nbsp;&nbsp;&nbsp;Next Match</h6>
+                        </span>
+                        <li class="collection-item avatar" id="next-match">
+                            <!-- Data Next Match -->
+                        </li>
+                    </ul>
                     <span class="black-text">
                         <h6>&nbsp;&nbsp;&nbsp;&nbsp;Last Match</h6>
                     </span>
-                    <li class="collection-item avatar" id="last-match">
+                    <ul class="collapsible" id="last-match">
                         <!-- Data Last Match -->
-                    </li>
-                </ul>
+                    </ul>
+                </div>
+            </div>
+            <div class="white-text center-align">
+                <button class="indigo darken-4 waves-effect waves-light btn-large" type="button" id="btnLoadMore">
+                    Load More
+                </button>
+            </div>
+            <br>
+            <blockquote>Click to see detail Squad Profile</blockquote>
+            <div class="col s12 white-text">
+                <div>
+                    <ul class="collapsible" id="squad">
+                        <!-- Data Squad -->
+                    </ul>
+                </div>
+            </div>
+            <br>
+        </div>
+        <!-- Akhir Content -->
+
+        <div>
+            <div class="fixed-action-btn">
+                <a class="btn-floating btn-large red darken-3" id="delete">
+                    <i class="large material-icons">delete</i>
+                </a>
+            </div>
+
+            <div class="fixed-action-btn">
+                <button class="btn-floating btn-large indigo darken-4 pulse" id="save">
+                    <i class="large material-icons">save</i>
+                </button>
             </div>
         </div>
-        <blockquote>Click to see detail Squad Profile</blockquote>
-        <div class="col s12 white-text">
-            <div>
-                <ul class="collapsible" id="squad">
-                    <!-- Data Squad -->
-                </ul>
-            </div>
-        </div>
-        <br>
     </div>
-    <!-- Akhir Content -->
 
-    <div>
-        <div class="fixed-action-btn">
-            <a class="btn-floating btn-large red darken-3" id="delete">
-                <i class="large material-icons">delete</i>
-            </a>
-        </div>
-
-        <div class="fixed-action-btn">
-            <button class="btn-floating btn-large indigo darken-4 pulse" id="save">
-                <i class="large material-icons">save</i>
-            </button>
+    <div class="preloader-wrapper big active" style="display: block;">
+        <div class="spinner-layer spinner-blue-only">
+            <div class="circle-clipper left">
+                <div class="circle"></div>
+            </div>
+            <div class="gap-patch">
+                <div class="circle"></div>
+            </div>
+            <div class="circle-clipper right">
+                <div class="circle"></div>
+            </div>
         </div>
     </div>
 
     <script src="js/materialize.min.js"></script>
     <script src="js/api.js"></script>
+    <script src="js/getTeam.js"></script>
+    <script src="js/getLastMatch.js"></script>
+    <script src="js/getNextMatch.js"></script>
+    <script src="js/getSavedTeam.js"></script>
     <!-- <script src="js/script.js"></script> -->
     <script src="js/idb/lib/idb.js"></script>
     <script src="js/ruang_bola_db.js"></script>
     <script>
+        window.onload = function () {
+            setTimeout(function () {
+                document.querySelector(".content").style.display = "block";
+                document.querySelector(".preloader-wrapper").style.display = "none";
+
+            }, 2000);
+        }
         // REGISTER SERVICE WORKER
         if ("serviceWorker" in navigator) {
             window.addEventListener("load", function () {
