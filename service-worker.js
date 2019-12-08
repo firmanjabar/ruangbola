@@ -47,7 +47,7 @@ workbox.precaching.precacheAndRoute([
 	},
 	{
 		url: '/manifest.json',
-		revision: '1'
+		revision: '2'
 	},
 	{
 		url: '/nav.html',

@@ -4,7 +4,7 @@
     "description": "Ruang bola adalah progressive web apps yang menampilkan klasemen, team, pertandingan, dan masih banyak lagi dari 12 liga yang paling populer di dunia.",
     "start_url": "/index.html",
     "display": "standalone",
-    "background_color": "#FFFCF2",
+    "background_color": "#00a6e8",
     "theme_color": "#022F40",
     "icons": [{
         "src": "./icons/icon.png",
