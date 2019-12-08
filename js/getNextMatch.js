@@ -28,7 +28,7 @@ function getNextMatchHTML(data) {
 
                     cek += `
                     <a href="./team.html?id=${data.id}">
-                        <img src="${logoTeam}" alt="" class="responsive-img" style="width: 50px;">
+                        <img src="${logoTeam}" alt="${data.name}" class="responsive-img" style="height: 50px;">
                         <br>
                         ${data.name}
                     </a>
@@ -53,7 +53,7 @@ function getNextMatchHTML(data) {
 
                 cek += `
                 <a href="./team.html?id=${data.id}">
-                    <img src="${logoTeam}" alt="" class="responsive-img" style="width: 50px;">
+                    <img src="${logoTeam}" alt="${data.name}" class="responsive-img" style="height: 50px;">
                     <br>
                     ${data.name}
                 </a>
@@ -77,7 +77,7 @@ function getNextMatchHTML(data) {
 
                     cek += `
                     <a href="./team.html?id=${data.id}">
-                        <img src="${logoTeam}" alt="" class="responsive-img" style="width: 50px;">
+                        <img src="${logoTeam}" alt="${data.name}" class="responsive-img" style="height: 50px;">
                         <br>
                         ${data.name}
                     </a>
@@ -102,7 +102,7 @@ function getNextMatchHTML(data) {
 
                 cek += `
                 <a href="./team.html?id=${data.id}">
-                    <img src="${logoTeam}" alt="" class="responsive-img" style="width: 50px;">
+                    <img src="${logoTeam}" alt="${data.name}" class="responsive-img" style="height: 50px;">
                     <br>
                     ${data.name}
                 </a>

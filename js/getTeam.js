@@ -16,14 +16,14 @@ function getTeamHTML(data, resolve) {
                 <div class="row">
                 <div class="col s2"></div>
                 <div class="col s8 card-image waves-effect waves-block waves-light">
-                    <img src="${logoTeam}" />
+                    <img class="responsive-img" alt="${data.name}" src="${logoTeam}" style="height:100%"/>
                 </div>
                 <div class="col s2"></div>
                 </div>
                 <hr>
                 <div class="card-content">
                 <span class="truncate"><b>${data.name} (${data.tla})</b></span>
-                <a href="${data.website}" target="_blank">  
+                <a rel="noopener" href="${data.website}" target="_blank">  
                     <p>${data.website}</p>
                 </a>
                 <hr>

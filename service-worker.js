@@ -7,12 +7,13 @@ if (workbox) {
 }
 
 workbox.precaching.precacheAndRoute([
-	'/',
 	'/favicon.ico',
 	'/css/materialize.min.css',
 	'/js/idb/lib/idb.js',
 	'/js/materialize.min.js',
 	'/img/firman.jpx',
+	'/img/yes.png',
+	'/img/no.png',
 	{
 		url: '/img/background2.jpx',
 		revision: '2'
@@ -42,7 +43,7 @@ workbox.precaching.precacheAndRoute([
 	},
 	{
 		url: '/index.html',
-		revision: '3'
+		revision: '2'
 	},
 	{
 		url: '/manifest.json',
@@ -58,7 +59,7 @@ workbox.precaching.precacheAndRoute([
 	},
 	{
 		url: '/team.html',
-		revision: '1'
+		revision: '6'
 	},
 	{
 		url: '/pages/about.html',
@@ -78,7 +79,7 @@ workbox.precaching.precacheAndRoute([
 	},
 	{
 		url: '/js/script.js',
-		revision: '1'
+		revision: '3'
 	},
 	{
 		url: '/js/api.js',
@@ -86,7 +87,7 @@ workbox.precaching.precacheAndRoute([
 	},
 	{
 		url: '/js/getCompetitions.js',
-		revision: '2'
+		revision: '3'
 	},
 	{
 		url: '/js/getLastMatch.js',
@@ -98,19 +99,19 @@ workbox.precaching.precacheAndRoute([
 	},
 	{
 		url: '/js/getStandings.js',
-		revision: '1'
+		revision: '7'
 	},
 	{
 		url: '/js/getTeam.js',
-		revision: '1'
+		revision: '3'
 	},
 	{
 		url: '/js/getNextMatch.js',
-		revision: '1'
+		revision: '2'
 	},
 	{
 		url: '/js/getSavedTeam.js',
-		revision: '2'
+		revision: '3'
 	},
 	{
 		url: '/js/cek_sw.js',
@@ -118,7 +119,7 @@ workbox.precaching.precacheAndRoute([
 	},
 	{
 		url: '/js/ruang_bola_db.js',
-		revision: '1'
+		revision: '2'
 	},
 	{
 		url: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js',
@@ -126,13 +127,25 @@ workbox.precaching.precacheAndRoute([
 	},
 ]);
 
+workbox.routing.registerRoute(new RegExp('/'),
+	workbox.strategies.staleWhileRevalidate({
+		cacheName: 'ruang-bola',
+		plugins: [
+			new workbox.expiration.Plugin({
+				maxEntries: 60,
+				maxAgeSeconds: 30 * 24 * 60 * 60, // 30 hari
+			}),
+		],
+	})
+);
+
 workbox.routing.registerRoute(
 	/^https:\/\/api\.football\-data\.org\/v2\//,
 	workbox.strategies.staleWhileRevalidate({
 		cacheName: 'football-data-api',
 		plugins: [
 			new workbox.expiration.Plugin({
-				maxEntries: 60,
+				maxEntries: 120,
 				maxAgeSeconds: 30 * 24 * 60 * 60, // 30 hari
 			}),
 		],
@@ -171,4 +184,26 @@ self.addEventListener('push', function (event) {
 	event.waitUntil(
 		self.registration.showNotification('Push Notification', options)
 	);
+});
+
+self.addEventListener('notificationclick', function (event) {
+	event.notification.close();
+	if (!event.action) {
+		// Penguna menyentuh area notifikasi diluar action
+		console.log('Notification Clicked.');
+		return;
+	}
+	switch (event.action) {
+		case 'yes-action':
+			console.log('Pengguna memilih action yes.');
+			// buka tab baru
+			clients.openWindow('/#saved');
+			break;
+		case 'no-action':
+			console.log('Pengguna memilih action no');
+			break;
+		default:
+			console.log(`Action yang dipilih tidak dikenal: '${event.action}'`);
+			break;
+	}
 });

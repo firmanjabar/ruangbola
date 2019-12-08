@@ -23,6 +23,17 @@ function saveFavTeam(team) {
                 'body': `Club ${team.name} sudah tersimpan, cek Team Favorite.`,
                 'badge': 'icons/icon.png',
                 'icon': 'icons/icon.png',
+                'actions': [{
+                        'action': 'yes-action',
+                        'title': 'Ya',
+                        'icon': '/img/yes.png'
+                    },
+                    {
+                        'action': 'no-action',
+                        'title': 'Tidak',
+                        'icon': '/img/no.png'
+                    }
+                ],
             };
             if (Notification.permission === 'granted') {
                 navigator.serviceWorker.ready.then(function (registration) {

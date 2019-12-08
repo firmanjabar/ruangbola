@@ -7,7 +7,7 @@ function getStandingsHTML(data) {
                 <div class="col s12 m6 l4">
                   <div class="card grey darken-4">
                     <div class="white card-image waves-effect waves-block waves-light">
-                      <img src="img/liga/${data.competition.code}.png" />
+                      <img class="responsive-img" alt="${data.competition.name}" src="img/liga/${data.competition.code}.png" style="height:100%"/>
                     </div>
                     <hr>
                     <div class="card-content">
@@ -57,7 +57,7 @@ function getStandingsHTML(data) {
         <div class="col s12 m6 l4">
           <div class="card grey darken-4">
             <div class="white card-image waves-effect waves-block waves-light">
-              <img src="img/liga/${data.competition.code}.png" />
+              <img class="responsive-img" alt="${data.competition.name}" src="img/liga/${data.competition.code}.png" style="height:100%"/>
             </div>
             <hr>
             <div class="card-content">
@@ -68,7 +68,7 @@ function getStandingsHTML(data) {
               <p>Mulai: ${data.season.startDate}</p>
               <p>Berakhir: ${data.season.endDate}</p>
               <p>Pertandingan: ${data.season.currentMatchday}</p>
-              <span class="valign-wrapper">Winner: <img style="width:20px" src='${imgWinner}' alt='${winner}'/> ${winner}</span>
+              <span class="valign-wrapper">Winner: <img style="width:20px" class="responsive-img" src='${imgWinner}' alt='${winner}'/> ${winner}</span>
             </div>
           </div>
         </div>
@@ -129,7 +129,7 @@ function getStandingsHTML(data) {
                 <div class="col s12 m6 l4">
                   <div class="card grey darken-4">
                     <div class="white card-image waves-effect waves-block waves-light">
-                      <img src="img/liga/${data.competition.code}.png" />
+                      <img class="responsive-img" alt="${data.competition.name}" src="img/liga/${data.competition.code}.png" style="height:100%" />
                     </div>
                     <hr>
                     <div class="card-content">

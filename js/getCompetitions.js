@@ -6,7 +6,7 @@ function getCompetitionsHTML(data) {
               <a href="./standing.html?id=${liga.id}">
                 <div class="card">
                   <div class="card-image waves-effect waves-block waves-light">
-                    <img alt="${liga.area.name}" src="img/liga/${liga.code}.png" />
+                    <img alt="${liga.area.name}" src="img/liga/${liga.code}.png" style="width:100%"/>
                   </div>
                   <hr>
                   <div class="card-content">
