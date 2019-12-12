@@ -127,6 +127,7 @@ function getNextMatchHTML(data) {
     </div>
     <div class="grey darken-4 collapsible-body center-align">
         <h6><b>${nextMatch.competition.name}</b></h6>
+        <p>Pekan ke-${nextMatch.matchday}</p>
         <p>${ts.toLocaleDateString('en-GB', options)}</p>
     </div>
     `;

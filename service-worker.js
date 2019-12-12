@@ -6,12 +6,17 @@ if (workbox) {
 	console.log(`Workbox gagal dimuat 😬`);
 }
 
+//This immediately deploys the service worker w/o requiring a refresh
+workbox.core.skipWaiting();
+workbox.core.clientsClaim();
+
 workbox.precaching.precacheAndRoute([
 	'/favicon.ico',
 	'/css/materialize.min.css',
 	'/js/idb/lib/idb.js',
 	'/js/materialize.min.js',
 	'/img/firman.jpx',
+	'/img/offline.svg',
 	'/img/yes.png',
 	'/img/no.png',
 	{
@@ -44,6 +49,10 @@ workbox.precaching.precacheAndRoute([
 	{
 		url: '/index.html',
 		revision: '2'
+	},
+	{
+		url: '/offline.html',
+		revision: '3'
 	},
 	{
 		url: '/manifest.json',
@@ -107,11 +116,11 @@ workbox.precaching.precacheAndRoute([
 	},
 	{
 		url: '/js/getNextMatch.js',
-		revision: '2'
+		revision: '3'
 	},
 	{
 		url: '/js/getSavedTeam.js',
-		revision: '3'
+		revision: '4'
 	},
 	{
 		url: '/js/cek_sw.js',
@@ -127,16 +136,39 @@ workbox.precaching.precacheAndRoute([
 	},
 ]);
 
+/**
+ * Add on install
+ */
+self.addEventListener('install', (event) => {
+	const urls = ['/offline.html'];
+	const cacheName = workbox.core.cacheNames.runtime;
+	event.waitUntil(caches.open(cacheName).then((cache) => cache.addAll(urls)))
+});
+
+const offlinePage = '/offline.html';
+/**
+ * Pages to cache
+ */
 workbox.routing.registerRoute(new RegExp('/'),
-	workbox.strategies.staleWhileRevalidate({
-		cacheName: 'ruang-bola',
-		plugins: [
-			new workbox.expiration.Plugin({
-				maxEntries: 60,
-				maxAgeSeconds: 30 * 24 * 60 * 60, // 30 hari
-			}),
-		],
-	})
+	async ({
+		event
+	}) => {
+		try {
+			return await workbox.strategies.staleWhileRevalidate({
+				cacheName: 'ruang-bola',
+				plugins: [
+					new workbox.expiration.Plugin({
+						maxEntries: 60,
+						maxAgeSeconds: 30 * 24 * 60 * 60, // 30 hari
+					}),
+				],
+			}).handle({
+				event
+			});
+		} catch (error) {
+			return caches.match(offlinePage);
+		}
+	}
 );
 
 workbox.routing.registerRoute(

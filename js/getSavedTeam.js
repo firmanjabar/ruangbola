@@ -19,7 +19,7 @@ function getSavedTeamHTML(teams) {
                   <a href="./team.html?id=${data.id}">
                     <div class="col s2"></div>
                       <div class="col s8 card-image waves-effect waves-block waves-light">
-                        <img alt="${data.name}" src="${logoTeam}" class="responsive-img" style="width:100%"/>
+                        <img alt="${data.name}" src="${logoTeam}" class="responsive-img" style="height:100%"/>
                       </div>
                     <div class="col s2"></div>
                   </a>
