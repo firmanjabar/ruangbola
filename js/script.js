@@ -52,7 +52,9 @@ document.addEventListener('DOMContentLoaded', function () {
 				if (this.status == 200) {
 					content.innerHTML = xhttp.responseText;
 					if (page == "home") {
-						content.append = eval($('.parallax').parallax());
+						// content.append = eval($('.parallax').parallax());
+						var parallax = document.querySelectorAll('.parallax');
+						M.Parallax.init(parallax);
 						getCompetitions();
 					} else if (page == "saved") {
 						getSavedTeam();

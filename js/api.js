@@ -53,25 +53,27 @@ function getCompetitions() {
 }
 
 function getStanding() {
-  // Ambil nilai query parameter (?id=)
-  let urlParams = new URLSearchParams(window.location.search);
-  let idParam = urlParams.get("id");
+  return new Promise(function (resolve, reject) {
+    // Ambil nilai query parameter (?id=)
+    let urlParams = new URLSearchParams(window.location.search);
+    let idParam = urlParams.get("id");
 
-  if ('caches' in window) {
-    caches.match(base_url + "competitions/" + idParam + "/standings?standingType=TOTAL").then(function (response) {
-      if (response) {
-        response.json().then(function (data) {
-          getStandingsHTML(data);
-        });
-      }
-    });
-  }
-  fetchApi(base_url + "competitions/" + idParam + "/standings?standingType=TOTAL")
-    .then(status)
-    .then(json)
-    .then(function (data) {
-      getStandingsHTML(data);
-    });
+    if ('caches' in window) {
+      caches.match(base_url + "competitions/" + idParam + "/standings?standingType=TOTAL").then(function (response) {
+        if (response) {
+          response.json().then(function (data) {
+            getStandingsHTML(data, resolve);
+          });
+        }
+      });
+    }
+    fetchApi(base_url + "competitions/" + idParam + "/standings?standingType=TOTAL")
+      .then(status)
+      .then(json)
+      .then(function (data) {
+        getStandingsHTML(data, resolve);
+      });
+  });
 }
 
 function getMatchToday() {
@@ -79,19 +81,8 @@ function getMatchToday() {
   let urlParams = new URLSearchParams(window.location.search);
   let idParam = urlParams.get("id");
 
-  let todaysDate = new Date();
-
-  let yyyy = todaysDate.getUTCFullYear().toString();
-  let mm = (todaysDate.getUTCMonth() + 1).toString();
-  let dd = todaysDate.getUTCDate().toString();
-
-  let mmChars = mm.split('');
-  let ddChars = dd.split('');
-
-  let res = yyyy + '-' + (mmChars[1] ? mm : "0" + mmChars[0]) + '-' + (ddChars[1] ? dd : "0" + ddChars[0]);
-
   if ('caches' in window) {
-    caches.match(base_url + "competitions/" + idParam + "/matches?status=SCHEDULED&dateTo=" + res + "&dateFrom=" + res).then(function (response) {
+    caches.match(base_url + "competitions/" + idParam + "/matches?status=SCHEDULED").then(function (response) {
       if (response) {
         response.json().then(function (data) {
           getMatchTodayHTML(data);
@@ -99,7 +90,7 @@ function getMatchToday() {
       }
     });
   }
-  fetchApi(base_url + "competitions/" + idParam + "/matches?status=SCHEDULED&dateTo=" + res + "&dateFrom=" + res)
+  fetchApi(base_url + "competitions/" + idParam + "/matches?status=SCHEDULED")
     .then(status)
     .then(json)
     .then(function (data) {

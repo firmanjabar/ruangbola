@@ -21,10 +21,10 @@ workbox.precaching.precacheAndRoute([
 	'/img/no.png',
 	{
 		url: '/img/background2.jpx',
-		revision: '2'
+		revision: '3'
 	}, {
 		url: '/img/background3.jpx',
-		revision: '2'
+		revision: '3'
 	},
 	'/img/liga/404.png',
 	'/img/liga/BL1.png',
@@ -44,11 +44,11 @@ workbox.precaching.precacheAndRoute([
 	'/icons/menu.svg',
 	{
 		url: '/css/styles.css',
-		revision: '2'
+		revision: '3'
 	},
 	{
 		url: '/index.html',
-		revision: '2'
+		revision: '3'
 	},
 	{
 		url: '/offline.html',
@@ -56,35 +56,35 @@ workbox.precaching.precacheAndRoute([
 	},
 	{
 		url: '/manifest.json',
-		revision: '2'
+		revision: '3'
 	},
 	{
 		url: '/nav.html',
-		revision: '1'
+		revision: '3'
 	},
 	{
 		url: '/standing.html',
-		revision: '1'
+		revision: '3'
 	},
 	{
 		url: '/team.html',
-		revision: '6'
+		revision: '3'
 	},
 	{
 		url: '/pages/about.html',
-		revision: '1'
+		revision: '3'
 	},
 	{
 		url: '/pages/contact.html',
-		revision: '1'
+		revision: '3'
 	},
 	{
 		url: '/pages/home.html',
-		revision: '1'
+		revision: '3'
 	},
 	{
 		url: '/pages/saved.html',
-		revision: '1'
+		revision: '3'
 	},
 	{
 		url: '/js/script.js',
@@ -92,7 +92,7 @@ workbox.precaching.precacheAndRoute([
 	},
 	{
 		url: '/js/api.js',
-		revision: '1'
+		revision: '3'
 	},
 	{
 		url: '/js/getCompetitions.js',
@@ -100,15 +100,15 @@ workbox.precaching.precacheAndRoute([
 	},
 	{
 		url: '/js/getLastMatch.js',
-		revision: '1'
+		revision: '3'
 	},
 	{
 		url: '/js/getMatchToday.js',
-		revision: '1'
+		revision: '3'
 	},
 	{
 		url: '/js/getStandings.js',
-		revision: '7'
+		revision: '3'
 	},
 	{
 		url: '/js/getTeam.js',
@@ -120,19 +120,15 @@ workbox.precaching.precacheAndRoute([
 	},
 	{
 		url: '/js/getSavedTeam.js',
-		revision: '4'
+		revision: '3'
 	},
 	{
 		url: '/js/cek_sw.js',
-		revision: '1'
+		revision: '3'
 	},
 	{
 		url: '/js/ruang_bola_db.js',
-		revision: '2'
-	},
-	{
-		url: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js',
-		revision: '1'
+		revision: '3'
 	},
 ]);
 
@@ -154,7 +150,7 @@ workbox.routing.registerRoute(new RegExp('/'),
 		event
 	}) => {
 		try {
-			return await workbox.strategies.staleWhileRevalidate({
+			return await workbox.strategies.networkFirst({
 				cacheName: 'ruang-bola',
 				plugins: [
 					new workbox.expiration.Plugin({
