@@ -1,8 +1,15 @@
-let dbPromised = idb.open("ruangBola", 1, function (upgradeDb) {
+let dbPromised = idb.open("ruangBola", 2, function (upgradeDb) {
     let teamOS = upgradeDb.createObjectStore("teams", {
         keyPath: "id"
     });
     teamOS.createIndex("name", "name", {
+        unique: false
+    });
+
+    let standingOS = upgradeDb.createObjectStore("standings", {
+        keyPath: "competition.id"
+    });
+    standingOS.createIndex("competition.name", "competition.name", {
         unique: false
     });
 });
@@ -47,6 +54,24 @@ function saveFavTeam(team) {
         }).catch(function () {
             M.toast({
                 html: 'Team gagal disimpan'
+            });
+        });
+}
+
+function saveStanding(standing) {
+    dbPromised
+        .then(function (db) {
+            let tx = db.transaction("standings", "readwrite");
+            let store = tx.objectStore("standings");
+            store.put(standing);
+            return tx.complete;
+        })
+        .then(function () {
+            const title = 'Data standing Berhasil disimpan!';
+            console.log(title);
+        }).catch(function () {
+            M.toast({
+                html: 'data Logo Team gagal disimpan'
             });
         });
 }
@@ -98,6 +123,21 @@ function getAllFavTeam() {
     });
 }
 
+function getAllCrestUrl() {
+    return new Promise(function (resolve, reject) {
+        dbPromised
+            .then(function (db) {
+                let tx = db.transaction("standings", "readonly");
+                let store = tx.objectStore("standings");
+                return store.getAll();
+            })
+            .then(function (crest) {
+                // console.log(teams);
+                resolve(crest);
+            });
+    });
+}
+
 function checkFavorite(id) {
     return new Promise(function (resolve, reject) {
         dbPromised
@@ -114,3 +154,20 @@ function checkFavorite(id) {
             });
     });
 }
+
+// function checkStanding(id) {
+//     return new Promise(function (resolve, reject) {
+//         dbPromised
+//             .then(function (db) {
+//                 let tx = db.transaction("standings", "readonly");
+//                 let store = tx.objectStore("standings");
+//                 return store.get(id);
+//             }).then(function (favorite) {
+//                 if (favorite !== undefined) {
+//                     resolve(true);
+//                 } else {
+//                     // reject(false);
+//                 }
+//             });
+//     });
+// }

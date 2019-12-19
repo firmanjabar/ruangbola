@@ -44,13 +44,27 @@
                 <div class="row grey darken-4" id="leagues">
                     <!-- Card berisi artikel akan disisipkan ke dalam sini. -->
                 </div>
-                <blockquote class="black-text">Click to see detail Match Today</blockquote>
-                <div class="col s12 white-text">
-                    <div>
-                        <ul class="collapsible" id="mt">
-                            <!-- Data Squad -->
-                        </ul>
-                    </div>
+                <span class="black-text">
+                    <h6>&nbsp;&nbsp;&nbsp;&nbsp;Next Match</h6>
+                </span>
+                <ul class="collapsible" id="mt">
+                    <!-- Data Last Match -->
+                    <li class="collection-item avatar hmm">
+                        <div class="row grey darken-4 collapsible-header valign-wrapper" style="margin:0px;">
+                            <div class="col m3">
+                            </div>
+                            <div class="col s12 m6 center-align score">
+                                <p>Click Load Data to see Next Match</p>
+                            </div>
+                            <div class="col m3">
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="white-text center-align">
+                    <button class="indigo darken-4 waves-effect waves-light btn-large" type="button" id="btnLoadMore">
+                        Load Data
+                    </button>
                 </div>
                 <blockquote class="black-text">Click logo or name to see details</blockquote>
                 <table class="grey darken-4 highlight responsive-table centered">
@@ -94,13 +108,25 @@
     <script src="js/api.js"></script>
     <script src="js/getStandings.js"></script>
     <script src="js/getMatchToday.js"></script>
+    <script src="js/idb/lib/idb.js"></script>
+    <script src="js/ruang_bola_db.js"></script>
     <script>
         window.onload = function () {
             setTimeout(function () {
                 document.querySelector(".content").style.display = "block";
                 document.querySelector(".preloader-wrapper").style.display = "none";
+            }, 3000);
 
-            }, 2000);
+            getMatchToday();
+
+            getStanding().then(function (standing) {
+                // console.log(standing);
+                saveStanding(standing);
+            });
+
+            // COLLAPSE
+            var collapse = document.querySelectorAll('.collapsible');
+            M.Collapsible.init(collapse);
         }
         // REGISTER SERVICE WORKER
         if ("serviceWorker" in navigator) {
@@ -117,15 +143,6 @@
         } else {
             console.log("ServiceWorker belum didukung browser ini.");
         }
-
-        document.addEventListener("DOMContentLoaded", function () {
-            getStanding();
-            getMatchToday();
-
-            // COLLAPSE
-            var collapse = document.querySelectorAll('.collapsible');
-            M.Collapsible.init(collapse);
-        });
     </script>
 </body>
 
