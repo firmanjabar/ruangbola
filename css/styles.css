@@ -22,8 +22,30 @@ body {
 /* layout styles */
 nav {
     background: var(--primary);
-    padding-bottom: 68px;
-    border-bottom: 8px solid var(--secondary);
+    border-bottom: 4px solid var(--secondary);
+}
+
+.navbar-fixed {
+    height: 0px;
+    margin-bottom: 0;
+}
+
+.navbar-fixed nav ul {
+    text-align: center;
+}
+
+.navbar-fixed nav ul li {
+    display: inline;
+    float: none;
+}
+
+.navbar-fixed nav ul li a {
+    display: inline-block;
+}
+
+.navbar-fixed nav {
+    bottom: 0;
+    border-bottom: 0;
 }
 
 ul li a.waves-effect:hover {
@@ -51,9 +73,6 @@ nav li a {
     font-weight: 800;
 }
 
-nav .sidenav-trigger {
-    margin: 0;
-}
 
 /* footer */
 .footerColor {
@@ -148,5 +167,9 @@ blockquote {
 @media screen and (max-width: 765px) {
     .sm-gone {
         display: none;
+    }
+
+    footer {
+        margin-bottom: 4.5rem;
     }
 }
