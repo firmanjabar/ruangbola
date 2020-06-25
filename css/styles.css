@@ -1,24 +1,35 @@
 /* colours */
 :root {
-    --primary: #022F40;
-    --secondary: #2A4B63;
-    --title: #FFFCF2;
+    --primary: #01161e;
+    --secondary: #124559;
+    --title: #f6f1d1;
 }
 
 body {
     font-family: 'Montserrat', sans-serif;
     font-weight: 500;
+    background-color: #d4d4d450;
 }
 
 .bold {
     font-weight: bold;
 }
 
+.garis {
+    border: 1px #00000040 ridge;
+}
+
 /* layout styles */
 nav {
     background: var(--primary);
-    padding-bottom: 60px;
+    padding-bottom: 68px;
     border-bottom: 8px solid var(--secondary);
+}
+
+ul li a.waves-effect:hover {
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    color: skyblue;
 }
 
 nav a {
@@ -46,7 +57,17 @@ nav .sidenav-trigger {
 
 /* footer */
 .footerColor {
-    background-color: var(--secondary);
+    background-color: var(--primary);
+}
+
+.fab {
+    color: white;
+    font-size: 2.5em;
+    margin: 2px;
+}
+
+.fab:hover {
+    color: skyblue;
 }
 
 .spaceIcon {
@@ -60,12 +81,16 @@ nav .sidenav-trigger {
 }
 
 .parallax img {
-    width: 150%;
+    width: 130%;
 }
 
 /* Card */
+.card:hover {
+    background-color: var(--title);
+}
+
 .card-image img {
-    height: 38vh;
+    width: 4rem;
     overflow: hidden;
     padding: 15px;
 }
@@ -120,15 +145,8 @@ blockquote {
     color: black;
 }
 
-@media (min-width: 767px) {
-
-    /* Parallax */
-    .parallax-container {
-        height: 400px;
-    }
-
-    .card-image img {
-        height: 22vw;
-        width: 100%;
+@media screen and (max-width: 765px) {
+    .sm-gone {
+        display: none;
     }
 }
