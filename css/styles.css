@@ -1,24 +1,57 @@
 /* colours */
 :root {
-    --primary: #022F40;
-    --secondary: #2A4B63;
-    --title: #FFFCF2;
+    --primary: #01161e;
+    --secondary: #124559;
+    --title: #f6f1d1;
 }
 
 body {
     font-family: 'Montserrat', sans-serif;
     font-weight: 500;
+    background-color: #d4d4d450;
 }
 
 .bold {
     font-weight: bold;
 }
 
+.garis {
+    border: 1px #00000040 ridge;
+}
+
 /* layout styles */
 nav {
     background: var(--primary);
-    padding-bottom: 60px;
-    border-bottom: 8px solid var(--secondary);
+    border-bottom: 4px solid var(--secondary);
+}
+
+.navbar-fixed {
+    height: 0px;
+    margin-bottom: 0;
+}
+
+.navbar-fixed nav ul {
+    text-align: center;
+}
+
+.navbar-fixed nav ul li {
+    display: inline;
+    float: none;
+}
+
+.navbar-fixed nav ul li a {
+    display: inline-block;
+}
+
+.navbar-fixed nav {
+    bottom: 0;
+    border-bottom: 0;
+}
+
+ul li a.waves-effect:hover {
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    color: skyblue;
 }
 
 nav a {
@@ -40,13 +73,20 @@ nav li a {
     font-weight: 800;
 }
 
-nav .sidenav-trigger {
-    margin: 0;
-}
 
 /* footer */
 .footerColor {
-    background-color: var(--secondary);
+    background-color: var(--primary);
+}
+
+.fab {
+    color: white;
+    font-size: 2.5em;
+    margin: 2px;
+}
+
+.fab:hover {
+    color: skyblue;
 }
 
 .spaceIcon {
@@ -60,12 +100,16 @@ nav .sidenav-trigger {
 }
 
 .parallax img {
-    width: 150%;
+    width: 130%;
 }
 
 /* Card */
+.card:hover {
+    background-color: var(--title);
+}
+
 .card-image img {
-    height: 38vh;
+    width: 4rem;
     overflow: hidden;
     padding: 15px;
 }
@@ -120,15 +164,12 @@ blockquote {
     color: black;
 }
 
-@media (min-width: 767px) {
-
-    /* Parallax */
-    .parallax-container {
-        height: 400px;
+@media screen and (max-width: 765px) {
+    .sm-gone {
+        display: none;
     }
 
-    .card-image img {
-        height: 22vw;
-        width: 100%;
+    footer {
+        margin-bottom: 4.5rem;
     }
 }
