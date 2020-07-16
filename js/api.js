@@ -108,7 +108,7 @@ function getTeam() {
       caches.match(base_url + "teams/" + idParam).then(function (response) {
         if (response) {
           response.json().then(function (data) {
-            // console.log(data);
+            console.log(data);
             getTeamHTML(data, resolve);
           });
         }
@@ -118,6 +118,7 @@ function getTeam() {
       .then(status)
       .then(json)
       .then(function (data) {
+            console.log(data);
         getTeamHTML(data, resolve);
       });
   });
