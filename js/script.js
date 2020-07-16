@@ -3,10 +3,6 @@ document.addEventListener(
   function () {
     loadNav();
 
-    // PARALLAX
-    var parallax = document.querySelectorAll(".parallax");
-    M.Parallax.init(parallax);
-
     function loadNav() {
       var xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function () {
