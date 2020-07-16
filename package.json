@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/firmanjabar/pwa-subm2#readme",
   "dependencies": {
+    "firebase": "^7.16.0",
     "web-push": "^3.4.2"
   }
 }
