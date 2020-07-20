@@ -1,7 +1,7 @@
 {
-  "name": "submission2",
+  "name": "Ruangbola",
   "version": "1.0.0",
-  "description": "\u0000#\u0000 \u0000p\u0000w\u0000a\u0000-\u0000s\u0000u\u0000b\u0000m\u00002\u0000\r\u0000 \u0000",
+  "description": "Ruangbola",
   "main": "push.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -1,14 +1,14 @@
 const base_url = "https://api.football-data.org/v2/";
 
-const api_token = 'b3dad9833b3a4b78af52563c2d2b6895';
+const api_token = "b3dad9833b3a4b78af52563c2d2b6895";
 
-let fetchApi = url => {
+let fetchApi = (url) => {
   return fetch(url, {
     headers: {
-      'X-Auth-Token': api_token,
-    }
+      "X-Auth-Token": api_token,
+    },
   });
-}
+};
 
 // Blok kode yang akan di panggil jika fetch berhasil
 function status(response) {
@@ -32,15 +32,17 @@ function error(error) {
 }
 // Blok kode untuk melakukan request data json
 function getCompetitions() {
-  if ('caches' in window) {
-    caches.match(base_url + "competitions?plan=TIER_ONE").then(function (response) {
-      if (response) {
-        response.json().then(function (data) {
-          // console.log(data);
-          getCompetitionsHTML(data);
-        });
-      }
-    });
+  if ("caches" in window) {
+    caches
+      .match(base_url + "competitions?plan=TIER_ONE")
+      .then(function (response) {
+        if (response) {
+          response.json().then(function (data) {
+            // console.log(data);
+            getCompetitionsHTML(data);
+          });
+        }
+      });
   }
   fetchApi(base_url + "competitions?plan=TIER_ONE")
     .then(status)
@@ -58,16 +60,22 @@ function getStanding() {
     let urlParams = new URLSearchParams(window.location.search);
     let idParam = urlParams.get("id");
 
-    if ('caches' in window) {
-      caches.match(base_url + "competitions/" + idParam + "/standings?standingType=TOTAL").then(function (response) {
-        if (response) {
-          response.json().then(function (data) {
-            getStandingsHTML(data, resolve);
-          });
-        }
-      });
+    if ("caches" in window) {
+      caches
+        .match(
+          base_url + "competitions/" + idParam + "/standings?standingType=TOTAL"
+        )
+        .then(function (response) {
+          if (response) {
+            response.json().then(function (data) {
+              getStandingsHTML(data, resolve);
+            });
+          }
+        });
     }
-    fetchApi(base_url + "competitions/" + idParam + "/standings?standingType=TOTAL")
+    fetchApi(
+      base_url + "competitions/" + idParam + "/standings?standingType=TOTAL"
+    )
       .then(status)
       .then(json)
       .then(function (data) {
@@ -81,14 +89,17 @@ function getMatchToday() {
   let urlParams = new URLSearchParams(window.location.search);
   let idParam = urlParams.get("id");
 
-  if ('caches' in window) {
-    caches.match(base_url + "competitions/" + idParam + "/matches?status=SCHEDULED").then(function (response) {
-      if (response) {
-        response.json().then(function (data) {
-          getMatchTodayHTML(data);
-        });
-      }
-    });
+  if ("caches" in window) {
+    caches
+      .match(base_url + "competitions/" + idParam + "/matches?status=SCHEDULED")
+      .then(function (response) {
+        if (response) {
+          response.json().then(function (data) {
+            getMatchTodayHTML(data);
+          });
+        }
+      });
+    // console.log("hi");
   }
   fetchApi(base_url + "competitions/" + idParam + "/matches?status=SCHEDULED")
     .then(status)
@@ -96,6 +107,7 @@ function getMatchToday() {
     .then(function (data) {
       getMatchTodayHTML(data);
     });
+  // console.log("again");
 }
 
 function getTeam() {
@@ -104,21 +116,21 @@ function getTeam() {
     let urlParams = new URLSearchParams(window.location.search);
     let idParam = urlParams.get("id");
 
-    if ('caches' in window) {
+    if ("caches" in window) {
       caches.match(base_url + "teams/" + idParam).then(function (response) {
         if (response) {
           response.json().then(function (data) {
-            console.log(data);
+            // console.log(data);
             getTeamHTML(data, resolve);
           });
         }
-      })
+      });
     }
     fetchApi(base_url + "teams/" + idParam)
       .then(status)
       .then(json)
       .then(function (data) {
-            console.log(data);
+        // console.log(data);
         getTeamHTML(data, resolve);
       });
   });
@@ -129,14 +141,16 @@ function getLastMatch() {
   let urlParams = new URLSearchParams(window.location.search);
   let idParam = urlParams.get("id");
 
-  if ('caches' in window) {
-    caches.match(base_url + "teams/" + idParam + "/matches?status=FINISHED").then(function (response) {
-      if (response) {
-        response.json().then(function (data) {
-          getLastMatchHTML(data);
-        });
-      }
-    });
+  if ("caches" in window) {
+    caches
+      .match(base_url + "teams/" + idParam + "/matches?status=FINISHED")
+      .then(function (response) {
+        if (response) {
+          response.json().then(function (data) {
+            getLastMatchHTML(data);
+          });
+        }
+      });
   }
   fetchApi(base_url + "teams/" + idParam + "/matches?status=FINISHED")
     .then(status)
@@ -151,14 +165,16 @@ function getNextMatch() {
   let urlParams = new URLSearchParams(window.location.search);
   let idParam = urlParams.get("id");
 
-  if ('caches' in window) {
-    caches.match(base_url + "teams/" + idParam + "/matches?status=SCHEDULED").then(function (response) {
-      if (response) {
-        response.json().then(function (data) {
-          getNextMatchHTML(data);
-        });
-      }
-    });
+  if ("caches" in window) {
+    caches
+      .match(base_url + "teams/" + idParam + "/matches?status=SCHEDULED")
+      .then(function (response) {
+        if (response) {
+          response.json().then(function (data) {
+            getNextMatchHTML(data);
+          });
+        }
+      });
   }
   fetchApi(base_url + "teams/" + idParam + "/matches?status=SCHEDULED")
     .then(status)

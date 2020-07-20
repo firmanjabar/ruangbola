@@ -1,107 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <title>Ruang Bola</title>
     <meta name="description" content="Ruang Bola" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/materialize.min.css">
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="manifest" href="/manifest.json">
-    <link rel="apple-touch-icon" href="/icons/icon.png">
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="css/materialize.min.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" href="/icons/icon.png" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
     <meta name="theme-color" content="#022F40" />
-    <link href="https://fonts.googleapis.com/css?family=Fascinate|Montserrat:300,400,500,600,700&display=swap"
-        rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-</head>
+    <link
+      href="https://fonts.googleapis.com/css?family=Fascinate|Montserrat:300,400,500,600,700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
-<body>
+  <body>
     <!-- Navigasi -->
     <nav role="navigation">
-        <div class="nav-wrapper container">
-            <a id="logo-container" href="/" class="brand-logo logoFont"><span>Ruang</span>Bola</a>
-            <span>
-                <a href="./index.html" class="sidenav-trigger" data-target="nav-mobile">
-                    <i class="material-icons">arrow_back</i>
-                </a>
-            </span>
+      <div class="nav-wrapper container">
+        <a id="logo-container" href="/" class="brand-logo logoFont"
+          ><span>Ruang</span>Bola</a
+        >
+        <span>
+          <a
+            href="./index.html"
+            class="sidenav-trigger"
+            data-target="nav-mobile"
+          >
+            <i class="material-icons">arrow_back</i>
+          </a>
+        </span>
 
-            <ul class="topnav right hide-on-med-and-down"></ul>
-            <ul id="nav-mobile" class="sidenav"></ul>
-        </div>
+        <ul class="topnav right hide-on-med-and-down"></ul>
+        <ul id="nav-mobile" class="sidenav"></ul>
+      </div>
     </nav>
     <!-- Akhir Navigasi -->
 
     <div class="content" style="display: none;">
-        <div class="container" id="body-content">
-            <div class="col s12">
-                <h4 class="center-align">Klasemen - Liga</h4>
-            </div>
-            <div class="col s12 white-text">
-                <div class="row grey darken-4" id="leagues">
-                    <!-- Card berisi artikel akan disisipkan ke dalam sini. -->
-                </div>
-                <span class="black-text">
-                    <h6>&nbsp;&nbsp;&nbsp;&nbsp;Next Match</h6>
-                </span>
-                <ul class="collapsible" id="mt">
-                    <!-- Data Last Match -->
-                    <li class="collection-item avatar hmm">
-                        <div class="row grey darken-4 collapsible-header valign-wrapper" style="margin:0px;">
-                            <div class="col m3">
-                            </div>
-                            <div class="col s12 m6 center-align score">
-                                <p>Click Load Data to see Next Match</p>
-                            </div>
-                            <div class="col m3">
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-                <div class="white-text center-align">
-                    <button class="indigo darken-4 waves-effect waves-light btn-large" type="button" id="btnLoadMore">
-                        Load Data
-                    </button>
-                </div>
-                <blockquote class="black-text">Click logo or name to see details</blockquote>
-                <table class="grey darken-4 highlight responsive-table centered">
-                    <thead>
-                        <tr class="darken-2 z-depth-5">
-                            <th>Peringkat<br>&nbsp;</th>
-                            <th>Logo<br>&nbsp;</th>
-                            <th>Club<br>&nbsp;</th>
-                            <th>M<br>&nbsp;</th>
-                            <th>M<br>&nbsp;</th>
-                            <th>S<br>&nbsp;</th>
-                            <th>K<br>&nbsp;</th>
-                            <th>GM<br>&nbsp;</th>
-                            <th>GA<br>&nbsp;</th>
-                            <th>SG<br>&nbsp;</th>
-                            <th>Poin<br>&nbsp;</th>
-                        </tr>
-                    </thead>
-                    <tbody id="standings"></tbody>
-                </table>
-            </div>
-            <br>
+      <div class="container" id="body-content">
+        <div class="col s12">
+          <h4 class="center-align">Klasemen - Liga</h4>
         </div>
+        <div class="col s12 white-text">
+          <div class="row" id="leagues">
+            <!-- Card berisi artikel akan disisipkan ke dalam sini. -->
+          </div>
+          <span class="black-text">
+            <h6>&nbsp;&nbsp;&nbsp;&nbsp;Next Match</h6>
+          </span>
+          <ul class="collapsible" id="mt">
+            <!-- Data Match Today -->
+            <li class="collection-item avatar hmm">
+              <div
+                class="row grey darken-4 valign-wrapper"
+                style="margin: 0px;"
+              >
+                <div class="col m3"></div>
+                <div class="col s12 m6 center-align score">
+                  <p>Click Load Data to see Next Match</p>
+                </div>
+                <div class="col m3"></div>
+              </div>
+            </li>
+            <li class="collection-item avatar">
+              <div
+                class="row grey darken-4 valign-wrapper take-me"
+                style="margin: 0px; padding-top: 20px; display: none;"
+              >
+                <div class="col m3"></div>
+                <div class="col s12 m6 center-align score">
+                  <img
+                    src="./img/liga/404.png"
+                    alt="not found"
+                    class="responsive-img img-home"
+                    style="height: 50px;"
+                  />
+                  <p>Tidak ada pertandingan</p>
+                </div>
+                <div class="col m3"></div>
+              </div>
+            </li>
+          </ul>
+          <div class="white-text center-align">
+            <button
+              class="indigo darken-4 waves-effect waves-light btn-large"
+              type="button"
+              id="btnLoadMore"
+            >
+              Load Data
+            </button>
+          </div>
+          <blockquote class="black-text">
+            Click logo or name to see details
+          </blockquote>
+          <table class="grey darken-4 highlight responsive-table centered">
+            <thead>
+              <tr class="darken-2 z-depth-5">
+                <th>Peringkat<br />&nbsp;</th>
+                <th>Logo<br />&nbsp;</th>
+                <th>Club<br />&nbsp;</th>
+                <th>M<br />&nbsp;</th>
+                <th>M<br />&nbsp;</th>
+                <th>S<br />&nbsp;</th>
+                <th>K<br />&nbsp;</th>
+                <th>GM<br />&nbsp;</th>
+                <th>GA<br />&nbsp;</th>
+                <th>SG<br />&nbsp;</th>
+                <th>Poin<br />&nbsp;</th>
+              </tr>
+            </thead>
+            <tbody id="standings"></tbody>
+          </table>
+        </div>
+        <br />
+      </div>
     </div>
 
     <div class="preloader-wrapper big active" style="display: block;">
-        <div class="spinner-layer spinner-blue-only">
-            <div class="circle-clipper left">
-                <div class="circle"></div>
-            </div>
-            <div class="gap-patch">
-                <div class="circle"></div>
-            </div>
-            <div class="circle-clipper right">
-                <div class="circle"></div>
-            </div>
+      <div class="spinner-layer spinner-blue-only">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
         </div>
+        <div class="gap-patch">
+          <div class="circle"></div>
+        </div>
+        <div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
     </div>
 
     <script src="js/materialize.min.js"></script>
@@ -111,39 +146,37 @@
     <script src="js/idb/lib/idb.js"></script>
     <script src="js/ruang_bola_db.js"></script>
     <script>
-        window.onload = function () {
-            setTimeout(function () {
-                document.querySelector(".content").style.display = "block";
-                document.querySelector(".preloader-wrapper").style.display = "none";
-            }, 3000);
+      setTimeout(function () {
+        document.querySelector(".content").style.display = "block";
+        document.querySelector(".preloader-wrapper").style.display = "none";
+      }, 3000);
 
-            getMatchToday();
-
-            getStanding().then(function (standing) {
-                // console.log(standing);
-                saveStanding(standing);
+      // REGISTER SERVICE WORKER
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function () {
+          navigator.serviceWorker
+            .register("/service-worker.js")
+            .then(function () {
+              console.log("Pendaftaran ServiceWorker berhasil");
+            })
+            .catch(function () {
+              console.log("Pendaftaran ServiceWorker gagal");
             });
+        });
+      } else {
+        console.log("ServiceWorker belum didukung browser ini.");
+      }
 
-            // COLLAPSE
-            var collapse = document.querySelectorAll('.collapsible');
-            M.Collapsible.init(collapse);
-        }
-        // REGISTER SERVICE WORKER
-        if ("serviceWorker" in navigator) {
-            window.addEventListener("load", function () {
-                navigator.serviceWorker
-                    .register("/service-worker.js")
-                    .then(function () {
-                        console.log("Pendaftaran ServiceWorker berhasil");
-                    })
-                    .catch(function () {
-                        console.log("Pendaftaran ServiceWorker gagal");
-                    });
-            });
-        } else {
-            console.log("ServiceWorker belum didukung browser ini.");
-        }
+      document.addEventListener("DOMContentLoaded", function () {
+        getMatchToday();
+        getStanding().then(function (standing) {
+          // console.log(standing);
+          saveStanding(standing);
+        });
+        // COLLAPSE
+        var collapse = document.querySelectorAll(".collapsible");
+        M.Collapsible.init(collapse);
+      });
     </script>
-</body>
-
+  </body>
 </html>

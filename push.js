@@ -40,7 +40,7 @@ db.collection("push-notif")
           auth: doc.data().auth,
         },
       };
-      var payload = "Sayang! Jangan sedih, aku ikut sedih :(";
+      var payload = "Masuk ga sih push notif nya? hehe :)";
 
       var options = {
         gcmAPIKey: "988799844009",
