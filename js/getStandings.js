@@ -1,6 +1,7 @@
 function getStandingsHTML(data, resolve) {
   let standingsHTML = "";
   let leagueHTML = "";
+
   if (data.competition.id == 2018) {
     leagueHTML += `
       <div class="col m3 l4"></div>
@@ -48,8 +49,8 @@ function getStandingsHTML(data, resolve) {
       winner = data.season.winner.name;
       imgWinner = data.season.winner.crestUrl;
     } else {
-      winner = 'Season Belum Berakhir';
-      imgWinner = '/img/liga/404.png';
+      winner = "Season Belum Berakhir";
+      imgWinner = "/img/liga/404.png";
     }
 
     leagueHTML += `
@@ -75,25 +76,25 @@ function getStandingsHTML(data, resolve) {
       <div class="col m3 l4"></div>
       `;
 
-    data.standings.forEach(standing => {
+    data.standings.forEach((standing) => {
       standingsHTML += `
       <tr>
-      <td>${standing.group.replace('_', " ")}</td>
+      <td>${standing.group.replace("_", " ")}</td>
       </tr>
-      `
-      standing.table.forEach(dataTeam => {
+      `;
+      standing.table.forEach((dataTeam) => {
         let urlTeamImage = dataTeam.team.crestUrl;
-        if (urlTeamImage == null || urlTeamImage == '') {
-          urlTeamImage = 'img/liga/404.png';
+        if (urlTeamImage == null || urlTeamImage == "") {
+          urlTeamImage = "img/liga/404.png";
         } else {
-          urlTeamImage = urlTeamImage.replace(/^http:\/\//i, 'https://');
+          urlTeamImage = urlTeamImage.replace(/^http:\/\//i, "https://");
         }
         standingsHTML += `
           <tr>
           <td>${dataTeam.position}<br />&nbsp;</td>
           <td>
             <a href="./team.html?id=${dataTeam.team.id}">
-            <img src="${urlTeamImage}" alt="${dataTeam.team.name}" class="responsive-img" style="height:30px">
+            <img src="${urlTeamImage}" onError="this.onerror=null;this.src='/img/liga/404.png';" alt="${dataTeam.team.name}" class="responsive-img" style="height:30px">
             </a>
           </td>
           <td>
@@ -120,8 +121,8 @@ function getStandingsHTML(data, resolve) {
       winner = data.season.winner.name;
       imgWinner = data.season.winner.crestUrl;
     } else {
-      winner = 'Season Belum Berakhir';
-      imgWinner = '/img/liga/404.png';
+      winner = "Season Belum Berakhir";
+      imgWinner = "/img/liga/404.png";
     }
 
     leagueHTML += `
@@ -147,19 +148,19 @@ function getStandingsHTML(data, resolve) {
     <div class="col m3 l4"></div>
     `;
 
-    data.standings[0].table.forEach(dataTeam => {
+    data.standings[0].table.forEach((dataTeam) => {
       let urlTeamImage = dataTeam.team.crestUrl;
-      if (urlTeamImage == null || urlTeamImage == '') {
-        urlTeamImage = 'img/liga/404.png';
+      if (urlTeamImage == null || urlTeamImage == "") {
+        urlTeamImage = "img/liga/404.png";
       } else {
-        urlTeamImage = urlTeamImage.replace(/^http:\/\//i, 'https://');
+        urlTeamImage = urlTeamImage.replace(/^http:\/\//i, "https://");
       }
       standingsHTML += `
               <tr>
               <td>${dataTeam.position}<br />&nbsp;</td>
               <td>
                 <a href="./team.html?id=${dataTeam.team.id}">
-                <img src="${urlTeamImage}" alt="${dataTeam.team.name}" class="responsive-img" style="height:30px">
+                <img src="${urlTeamImage}" onError="this.onerror=null;this.src='/img/liga/404.png';" alt="${dataTeam.team.name}" class="responsive-img" style="height:30px">
                 </a>
               </td>
               <td>
