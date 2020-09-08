@@ -1,10 +1,10 @@
 {
-  "name": "Ruangbola",
+  "name": "ruangbola",
   "version": "1.0.0",
   "description": "Ruangbola",
   "main": "push.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "deploy": "gh-pages -b master -d ."
   },
   "repository": {
     "type": "git",
@@ -16,9 +16,10 @@
   "bugs": {
     "url": "https://github.com/firmanjabar/pwa-subm2/issues"
   },
-  "homepage": "https://github.com/firmanjabar/pwa-subm2#readme",
+  "homepage": "https://github.com/firmanjabar/ruangbola",
   "dependencies": {
     "firebase": "^7.16.0",
+    "gh-pages": "^3.1.0",
     "web-push": "^3.4.2"
   }
 }
